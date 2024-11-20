@@ -1,0 +1,116 @@
+﻿@model IsVerenViewModel
+<h4>Üyelik Bilgileri</h4>
+<div class="signup-form">
+    <div class="row">
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Yetkili Ad Soyad</label>
+                @Html.TextBoxFor(x => x.AdSoyad, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Yetkili E-Mail Adresi</label>
+                @Html.TextBoxFor(x => x.Eposta, new
+                    {
+                        type = "email",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-12 col-12">
+            <div class="form-group">
+                <label>Yetkili GSM No</label>
+                @Html.TextBoxFor(x => x.Telefon, new
+                    {
+                        type = "number",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div> 
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Firma Unvanı</label>
+                @Html.TextBoxFor(x => x.FirmaUnvan, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required",
+                        placeholder = "Örnek: XYZ Anonim Şirketi"
+                    })
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Firma Web Sitesi</label>
+                @Html.TextBoxFor(x => x.FirmaWebAdres, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required",
+                        placeholder = "Örnek: www.xyzas.com"
+                    })
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Şifre Giriniz</label>
+                @Html.TextBoxFor(x => x.Parola, new
+                    {
+                        type = "password",
+                        @class = "form-control",
+                        required = "required",
+                        id = "isverenparola"
+                    })
+                <span toggle="#isverenparola" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+                <strong><span asp-validation-for="Parola" class="text-danger"></span></strong>
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Şifrenizi Doğrulayın</label>
+                @Html.TextBoxFor(x => x.ParolaTekrar, new
+                    {
+                        type = "password",
+                        @class = "form-control",
+                        required = "required",
+                        id = "isverenparolaTekrar"
+                    })
+                <span toggle="#isverenparolaTekrar" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+                <strong><span asp-validation-for="ParolaTekrar" class="text-danger"></span></strong>
+            </div>
+        </div>
+
+
+       
+    
+    </div>
+
+</div>
+
+
+<script>
+    document.querySelectorAll(".toggle-password").forEach(function (element) {
+        element.addEventListener("click", function () {
+            var input = document.querySelector(this.getAttribute("toggle"));
+            if (input.type === "password") {
+                input.type = "text"; // Şifreyi görünür yap
+                this.classList.remove("fa-eye-slash"); // Göz simgesini kaldır
+                this.classList.add("fa-eye"); // Göz kapalı simgesini ekle
+            } else {
+                input.type = "password"; // Şifreyi gizle
+                this.classList.remove("fa-eye"); // Göz kapalı simgesini kaldır
+                this.classList.add("fa-eye-slash"); // Göz simgesini ekle
+            }
+        });
+    });
+</script>

@@ -1,0 +1,926 @@
+﻿@model OzgecmisViewModel
+
+    <!-- Pre-loader End -->
+    <!-- Navbar Area Start -->
+ 
+
+        <!-- Menu For Desktop Device -->
+      
+    <!-- Navbar Area End -->
+    <!-- Page Title Start -->
+    <section class="page-title title-bg11">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <h2>CV Oluşturma</h2>
+            </div>
+        </div>
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- Page Title End -->
+    <!-- Resume Area Start -->
+    <section class="resume-section ptb-100">
+        <div class="container">
+        <form id="cvForm" asp-action="Ozgecmis" enctype="multipart/form-data" asp-controller="IsArayan" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Kişisel Bilgiler -->
+            <h4>Kişisel Bilgiler</h4>
+            <form class="signup-form" >
+                    
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <label for="hakkımda">Hakkımda:</label>
+
+                        @Html.TextAreaFor(x => x.NitelikAd, new
+                            {
+                                @class = "form-control ",
+                                id = "hakkımda",
+                                name = "hakkımda",
+                                rows = "4",
+                                cols="50"
+                           
+                            })
+
+                    </div>
+                    <span><span asp-validation-for="NitelikAd" class="text-danger"></span></span>
+                        <div class="col-lg-6 col-6 mb-3">
+                            <div class="form-group">
+                                <label>Fotoğrafınızı Yükleyiniz</label>
+                            @Html.TextBoxFor(x => x.FotoDosya, new
+                                {
+                                    type = "file",
+                                    accept = "image/png, image/jpg, image/jpeg",
+                                    @class = "form-control",
+                                    required = "required"
+                                })
+                             
+                            </div>
+                        <span><span asp-validation-for="FotoDosya" class="text-danger"></span></span>
+                        </div>
+                    <div class="col-lg-6 col-6 mb-3">
+                        <div class="form-group">
+                            <label>Ad Soyad</label>
+                            @Html.TextBoxFor(m => m.AdSoyad, new { @class = "form-control",type="text", required = "required" })
+                        </div>
+                        <span><span asp-validation-for="AdSoyad" class="text-danger"></span></span>
+                    </div>
+                        <div class="col-lg-6 col-6 mb-3">
+                            <div class="form-group">
+                                <label>Şehir</label>
+                            @Html.TextBoxFor(m => m.Sehir, new { @class = "form-control", type = "text", required = "required" })
+                            </div>
+                        <span><span asp-validation-for="Sehir" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-lg-6 col-6 mb-3">
+                            <div class="form-group">
+                                <label>İlçe</label>
+                            @Html.TextBoxFor(m => m.Ilce, new { @class = "form-control", type = "text", required = "required" })
+
+                            </div>
+                        <span><span asp-validation-for="Ilce" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-lg-12 col-12 mb-3">
+                            <div class="form-group">
+                                <label>Adres</label>
+                            @Html.TextBoxFor(m => m.Adres, new { @class = "form-control", type = "text", required = "required" })
+                        </div> <span><span asp-validation-for="Adres" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-lg-6 col-6 mb-3">
+                            <div class="form-group">
+                                <label>Doğum Tarihi</label>
+                            @Html.TextBoxFor(m => m.DogumTarihi, new { @class = "form-control", type = "date", required = "required" })
+                            </div>
+                        <span><span asp-validation-for="DogumTarihi" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-lg-6 col-6 mb-3">
+                            <div class="form-group">
+                                <label>Medeni Hal</label>
+                            @Html.DropDownListFor(x => x.MedeniHal1, new SelectList(Enum.GetValues(typeof(MedeniHal))),
+                                     "Seçiniz", new { @class = "form-control", required = "required" })
+                            </div>
+                        
+                        </div>
+                        <div class="col-lg-4 col-4 mb-3">
+                            <div class="form-group">
+                                <label>Cinsiyet</label>
+                            @Html.DropDownListFor(x => x.CinsiyetId, new SelectList(Model.Cinsiyetler, "Id", "Ad"),
+                                     "Seçiniz", new { @class = "form-control", required = "required" })
+
+                            </div>
+                        
+                        </div>
+                        <div class="col-lg-4 col-4 mb-3">
+                            <div class="form-group">
+                                <label>Eğitim Durumu</label>
+                            @Html.DropDownListFor(x => x.EgitimId, new
+                                     SelectList(Model.Egitimler, "Id", "Ad"), "Seçiniz",
+                                     new { @class = "form-control", required = "required" })
+                            </div>
+                      
+                        </div>
+                        <div class="col-lg-4 col-4 mb-3">
+                            <div class="form-group">
+                                <label>Meslek</label>
+                            @Html.TextBoxFor(m => m.Meslek, new { @class = "form-control", type = "text", @id = "meslekSearch", placeholder = "İş Unvanı", required = "required" })
+                            <span asp-validation-for="MeslekId" class="text-danger"></span>
+                            <input type="hidden" id="meslekId" name="MeslekId" value="@Model.MeslekId" />
+                            <ul id="meslekList" style="display:none; position: absolute; z-index: 1000;"></ul>
+
+                        </div>
+                        </div>
+                        <div class="col-lg-4 col-4 mb-3">
+                            <div class="form-group">
+                                <label>İş Deneyim Süresi</label>
+                            @Html.DropDownListFor(x => x.DeneyimId, new
+                                     SelectList(Model.Deneyimler, "Id", "Ad"), "Seçiniz",
+                                     new { @class = "form-control" }
+                                     )
+                        </div>
+                      
+                        </div>
+                        <div class="col-lg-4 col-4 mb-3">
+                            <div class="form-group">
+                                <label>Sürücü Belgesi</label>
+                            @Html.DropDownListFor(x => x.SurucuBelgeId, new
+                                     SelectList(Model.SurucuBelgeler, "Id", "Ad"), "Seçiniz",
+                                     new { @class = "form-control" }
+                                     )
+                            </div>
+                       
+                        </div>
+                        <div class="col-lg-4 col-4 mb-3">
+                            <div class="form-group">
+                                <label>SRC Belgesi</label>
+                            @Html.DropDownListFor(x => x.SrcbelgeId, new
+                                     SelectList(Model.Srcbelgeler, "Id", "Ad"), "Seçiniz",
+                                     new { @class = "form-control" }
+                                     )
+                            </div>
+                       
+                        </div>
+                        <!-- Eğitim Bilgileri -->
+                        </div>
+                       @for (int i = 0; i < Model.Egitim?.Count; i++)
+                {
+                        <div id="educationRepeater" class="mt-4 mb-4">
+                            <h3>Eğitim Bilgileri</h3>
+                            <div class="education-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="school">Okul Adı:</label>
+                                        @Html.TextBoxFor(m => m.Egitim![i].OkulAd, new { @class = "form-control", name = $"Egitim[{i}].OkulAd", type = "text", required = "required" })
+                                       
+                                        </div>
+                                
+                                        <div class="col-md-2">
+                                            <label for="graduationYear">Mezuniyet Yılı:</label>
+                                        @Html.TextBoxFor(m => m.Egitim![i].MezuniyetYil, new { @class = "form-control", name = $"Egitim[{i}].MezuniyetYil", type = "text", required = "required" })
+
+                                  
+                                        </div>
+                                  
+                                        <div class="col-md-2">
+                                            <label for="graduationYear">Mezuniyet Bilgisi:</label>
+                                        @Html.DropDownListFor(x => x.Egitim![i].MezuniyetBigiId, new
+                                             SelectList(Model.MezunuyetBilgiler, "Id", "Ad"), "Seçiniz",
+                                                 new { @class = "form-control", name = $"Egitim[{i}].MezuniyetBigiId", required = "required" }
+                                             )
+                                         
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="department">Bölüm:</label>
+                                        @Html.TextBoxFor(m => m.Egitim![i].Bolum, new { @class = "form-control", name = $"Egitim[{i}].Bolum", type = "text", required = "required" })
+
+                                       
+                                        </div>
+                                   
+                                        <div class="col-md-2">
+                                            <div class="btn-rep text-center">
+                                                <button type="button" class="but" id="addEducation">Yeni Ekle</button>
+                                                <div>
+                                                    <button type="button" class="remove-education"><i class="bx bx-trash"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                }   
+                      
+                       @for (int i = 0; i < Model.Deneyimlerim?.Count; i++)
+                {
+                        <div id="experienceRepeater" class="mb-4">
+                            <h3>İş Deneyimleri</h3>
+                            <div class="experience-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="company">Kurum Adı:</label>
+                                        @Html.TextBoxFor(m => m.Deneyimlerim![i].KurumAd, new { @class = "form-control", name = $"Deneyimlerim[{i}].KurumAd", type = "text", required = "required" })
+
+                                          
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="position">Pozisyon:</label>
+                                        @Html.TextBoxFor(m => m.Deneyimlerim![i].Pozisyon, new { @class = "form-control", name = $"Deneyimlerim[{i}].Pozisyon", type = "text", required = "required" })
+
+                                           
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="duration">İş Balangıç Yılı ve Bitiş:</label>
+                                        @Html.TextBoxFor(m => m.Deneyimlerim![i].BasBityil, new { @class = "form-control", name = $"Deneyimlerim[{i}].BasBityil", type = "text", required = "required" })
+
+
+                                 
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="description">Açıklama:</label>
+                                        @Html.TextAreaFor(x => x.Deneyimlerim![i].Acıiklama, new
+                                            {
+                                            @class = "form-control ",
+                                                name = $"Deneyimlerim[{i}].Acıiklama",
+                                                rows = "3"
+                                        })
+                                           
+                                        </div>
+
+                                        <div class="col-md-2 ">
+                                            <div class="btn-rep text-center">
+                                                <button type="button" class="but" id="addExperience">Yeni Ekle</button>
+                                                <div>
+                                                    <button type="button" class="remove-experience"><i class="bx bx-trash"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+              }  
+             
+                       @for (int i = 0; i < Model.Beceriler?.Count; i++)
+                    {
+                  
+                <div id="skillsRepeater" class="mb-4">
+                  
+                            <h3>Beceriler</h3>
+                            <div class="skill-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="skillName">Beceri:</label>
+                                        @Html.TextBoxFor(m => m.Beceriler![i].Beceri, new { @class = "form-control", name = $"Beceriler[{i}].Beceri", type = "text", required = "required" })
+
+
+                                          
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="skillLevel">Yüzde:</label>
+                                        @Html.TextBoxFor(m => m.Beceriler![i].Yuzde, new { @class = "form-control", type = "number", name = $"Beceriler[{i}].Yuzde", min = "0", max = "100", required = "required" })
+
+                                       
+                                        </div>
+
+                                        <div class="col-md-3 ">
+                                            <div class="btn-rep text-center">
+                                                <button type="button" class="but" id="addSkill">Yeni Ekle</button>
+                                                <div>
+                                                    <button type="button" class="remove-skill"><i class="bx bx-trash"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                     </div>
+               }   
+               
+                       @for (int i = 0; i < Model.YabnciDil?.Count; i++)
+                    {   <div id="languageRepeater" class="mb-4">
+                            <h3>Yabancı Diller</h3>
+                            <div class="language-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="languageName">Dil Adı:</label>
+                                        @Html.TextBoxFor(m => m.YabnciDil[i].Dil, new { @class = "form-control", type = "text", name = $"YabanciDil[{i}].Dil", required = "required" })
+
+
+                                 
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="languageLevel">Seviye:</label>
+                                        @Html.TextBoxFor(m => m.YabnciDil[i].Seviye, new { @class = "form-control", type = "number", name = $"YabanciDil[{i}].Seviye", required = "required" })
+
+                                   
+                                        </div>
+
+                                        <div class="col-md-3 ">
+                                            <div class="btn-rep text-center">
+                                                <button type="button" class="but" id="addLanguage">Yeni Ekle</button>
+                                                <div>
+                                                    <button type="button" class="remove-language"><i class="bx bx-trash"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+}
+                
+                 
+                       @for (int i = 0; i < Model.Sertifikalar?.Count; i++)
+    {
+                        <div id="certificateRepeater" class="mb-4">
+                            <h3>Sertifikalar</h3>
+                            <div class="certificate-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="certificateName">Sertifika Adı:</label>
+                                        @Html.TextBoxFor(m => m.Sertifikalar![i].Sertifika, new
+                                            {
+                                            @class = "form-control",
+                                            type = "text",
+                                                name = $"Sertifikalar[{i}].Sertifika",
+                                                required = "required"
+                                            })
+
+                                           
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="institution">Kurum:</label>
+                                        @Html.TextBoxFor(m => m.Sertifikalar![i].Kurum, new
+                                            {
+                                            @class = "form-control",
+                                            type = "text",
+                                                name = $"Sertifikalar[{i}].Kurum",
+                                                required = "required"
+                                        })
+                                          
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="year">Alınma Yılı:</label>
+                                        @Html.TextBoxFor(m => m.Sertifikalar![i].AlinmaYili, new
+                                            {
+                                            @class = "form-control",
+                                            type = "number",
+                                                name = $"Sertifikalar[{i}].AlinmaYili",
+                                                required = "required"
+                                        })
+                                          
+                                        </div>
+                                        <div class="col-md-3 ">
+                                            <div class="btn-rep text-center">
+                                                <button type="button" class="but" id="addCertificate">Yeni Ekle</button>
+                                                <div>
+                                                    <button type="button" class="remove-certificate"><i class="bx bx-trash"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                
+                       @for (int i = 0; i < Model.Referanslar?.Count; i++)
+    {
+                        <div id="referenceRepeater" class="mb-4">
+                            <h3>Referanslar</h3>
+                            <div class="reference-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="referenceName">Referans Adı:</label>
+                                        @Html.TextBoxFor(m => m.Referanslar![i].Referans, new
+                                            {
+                                            @class = "form-control",
+                                            type = "text",
+                                                name = $"Referanslar[{i}].Ad",
+                                                required = "required"
+                                        })
+                                          
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="referencePosition">Pozisyon:</label>
+                                        @Html.TextBoxFor(m => m.Referanslar![i].Pozisyon, new
+                                            {
+                                            @class = "form-control",
+                                            type = "text",
+                                            name = "referencePosition[]",
+                                            required = "required"
+                                        })
+                                          
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="referenceContact">İletişim Bilgileri:</label>
+                                    @Html.TextBoxFor(m => m.IletisimBilgi, new
+                                        {
+                                            @class = "form-control",
+                                            type = "text",
+                                                name = $"Referanslar[{i}].Pozisyon",
+                                                required = "required"
+                                        })
+
+                                
+                                        </div>
+                                        <div class="col-md-3 ">
+                                            <div class="btn-rep text-center">
+                                                <button type="button" class="but" id="addReference">Yeni Ekle</button>
+                                                <div>
+                                                    <button type="button" class="remove-reference"><i class="bx bx-trash"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        }
+                     
+                        
+                        
+                        
+                        <div class="text-center">
+                            <button class="cv-btn" type="submit">Kaydet</button></div>
+</form>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- Resume Area End -->
+    <!-- Footer Section Start -->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        await fetchMezuniyetBilgiler(); // Wait for graduation information
+    });
+
+    async function fetchMezuniyetBilgiler() {
+        try {
+            const response = await fetch('/IsArayan/GetMezuniyetBilgiler');
+            const data = await response.json();
+            window.mezuniyetBilgiler = data;
+        } catch (error) {
+            console.error('Error fetching mezuniyet bilgileri:', error);
+        }
+    }
+</script>
+   
+  
+    <script>
+
+ 
+       
+        document.addEventListener('click', function (event) {
+            // Eğitim ekleme
+            // if (event.target && event.target.id === 'addEducation') {
+            //     const educationRepeater = document.getElementById('educationRepeater');
+            //     const educationItem = event.target.closest('.education-item');
+            //     const newEducation = educationItem.cloneNode(true);
+            //     newEducation.querySelectorAll('input').forEach(input => input.value = '');
+            //     educationRepeater.appendChild(newEducation);
+            //     addRemoveEvent(newEducation, 'education');
+            // }
+            // // İş deneyimi ekleme
+            // if (event.target && event.target.id === 'addExperience') {
+            //     const experienceRepeater = document.getElementById('experienceRepeater');
+            //     const experienceItem = event.target.closest('.experience-item');
+            //     const newExperience = experienceItem.cloneNode(true);
+            //     newExperience.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            //     experienceRepeater.appendChild(newExperience);
+            //     addRemoveEvent(newExperience, 'experience');
+            // }
+            // Beceri ekleme
+            // if (event.target && event.target.id === 'addSkill') {
+            //     const skillsRepeater = document.getElementById('skillsRepeater');
+            //     const skillItem = event.target.closest('.skill-item');
+            //     const newSkill = skillItem.cloneNode(true);
+            //     newSkill.querySelectorAll('input').forEach(input => input.value = '');
+            //     skillsRepeater.appendChild(newSkill);
+            //     addRemoveEvent(newSkill, 'skill');
+            // }
+            // Sertifika ekleme
+
+   
+      
+            if (event.target && event.target.id === 'addEducation') {
+                const educationRepeater = document.getElementById('educationRepeater');
+                const educationCount = educationRepeater.getElementsByClassName('education-item').length;
+
+                
+                const newEducationItem = document.createElement('div');
+                newEducationItem.classList.add('education-item');
+                newEducationItem.innerHTML = `
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="school">Okul Adı:</label>
+                            <input type="text" class="form-control" name="Egitim[${educationCount}].OkulAd" required="required" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="graduationYear">Mezuniyet Yılı:</label>
+                            <input type="text" class="form-control" name="Egitim[${educationCount}].MezuniyetYil" required="required" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="graduationInfo">Mezuniyet Bilgisi:</label>
+
+                                    <select class="form-control" name="Egitim[${educationCount}].MezuniyetBigiId" required="required">
+                                    <option value="">Seçiniz</option>
+                                    ${window.mezuniyetBilgiler.map(m => `
+                                        <option value="${m.value}">${m.text}</option>
+                                    `).join('')}
+                                </select>
+
+                            </div>
+                        <div class="col-md-3">
+                            <label for="department">Bölüm:</label>
+                            <input type="text" class="form-control" name="Egitim[${educationCount}].Bolum" required="required" />
+                        </div>
+                        <div class="col-md-2">
+                            <div class="btn-rep text-center">
+                                    <button type="button" class="remove-education"><i class="bx bx-trash"> Kaldır</i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                
+                educationRepeater.appendChild(newEducationItem);
+
+        
+            addRemoveEvent(newEducationItem, 'education');
+            }
+        
+
+       
+
+
+        if (event.target && event.target.id === 'addExperience') {
+            const experienceRepeater = document.getElementById('experienceRepeater');
+            const experienceItems = experienceRepeater.getElementsByClassName('experience-item');
+            const experienceCount = experienceItems.length; // Get the current count of experience items
+
+      
+            const newExperienceItem = document.createElement('div');
+            newExperienceItem.classList.add('experience-item');
+            newExperienceItem.innerHTML = `
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="company">Kurum Adı:</label>
+                            <input type="text" class="form-control" name="Deneyimlerim[${experienceCount}].KurumAd" required="required" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="position">Pozisyon:</label>
+                            <input type="text" class="form-control" name="Deneyimlerim[${experienceCount}].Pozisyon" required="required" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="duration">İş Başlangıç Yılı ve Bitiş:</label>
+                            <input type="text" class="form-control" name="Deneyimlerim[${experienceCount}].BasBityil" required="required" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="description">Açıklama:</label>
+                            <textarea class="form-control" name="Deneyimlerim[${experienceCount}].Acıiklama" rows="3"></textarea>
+                        </div>
+                        <div class="col-md-2 ">
+                            <div class="btn-rep text-center">
+                                    <button type="button" class="remove-experience"><i class="bx bx-trash"> Kaldır</i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+   
+            experienceRepeater.appendChild(newExperienceItem);
+
+          
+            addRemoveEvent(newExperienceItem, 'experience');
+        }
+    
+        
+        
+        
+        
+        if (event.target && event.target.id === 'addSkill') {
+            const skillsRepeater = document.getElementById('skillsRepeater');
+            const skillCount = skillsRepeater.getElementsByClassName('skill-item').length;
+
+            // Yeni beceri öğesi oluşturma
+            const newSkillItem = document.createElement('div');
+            newSkillItem.classList.add('skill-item');
+            newSkillItem.innerHTML = `
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="skillName">Beceri:</label>
+   
+                                <input type="text" class="form-control" name="Beceriler[${skillCount}].Beceri" required="required" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="skillLevel">Yüzde:</label>
+                                <input type="number" class="form-control" name="Beceriler[${skillCount}].Yuzde" min="0" max="100" required="required" />
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-rep text-center">
+                                    <button type="button" class="remove-skill"><i class="bx bx-trash"></i> Kaldır</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            skillsRepeater.appendChild(newSkillItem);
+
+           
+            addRemoveEvent(newSkillItem, 'skill');
+        }
+
+
+     
+        
+        
+        if (event.target && event.target.id === 'addLanguage') {
+            const languageRepeater = document.getElementById('languageRepeater');
+            const languageCount = languageRepeater.getElementsByClassName('language-item').length;
+
+         
+            const newLanguageItem = document.createElement('div');
+            newLanguageItem.classList.add('language-item');
+            newLanguageItem.innerHTML = `
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="languageName">Dil Adı:</label>
+                        <input type="text" class="form-control" name="YabanciDil[${languageCount}].Dil" required="required" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="languageLevel">Seviye:</label>
+                        <input type="number" class="form-control" name="YabanciDil[${languageCount}].Seviye" required="required" />
+                    </div>
+                    <div class="col-md-3 ">
+                        <button type="button" class="remove-language"><i class="bx bx-trash"></i> Kaldır</button>
+                    </div>
+                </div>
+            </div>
+        `;
+            languageRepeater.appendChild(newLanguageItem);
+            addRemoveEvent(newLanguageItem, 'language');
+        }
+
+
+
+
+
+      
+       
+            if (event.target && event.target.id === 'addCertificate') {
+                const certificateRepeater = document.getElementById('certificateRepeater');
+                const certificateCount = certificateRepeater.getElementsByClassName('certificate-item').length;
+
+                
+                const newCertificateItem = document.createElement('div');
+                newCertificateItem.classList.add('certificate-item');
+                newCertificateItem.innerHTML = `
+              <div class="form-group">
+                  <div class="row">
+                      <div class="col-md-3">
+                          <label for="certificateName">Sertifika Adı:</label>
+                          <input type="text" class="form-control" name="Sertifikalar[${certificateCount}].Sertifika" required="required" />
+                      </div>
+                      <div class="col-md-3">
+                          <label for="institution">Kurum:</label>
+                          <input type="text" class="form-control" name="Sertifikalar[${certificateCount}].Kurum" required="required" />
+                      </div>
+                      <div class="col-md-3">
+                          <label for="year">Alınma Yılı:</label>
+                          <input type="number" class="form-control" name="Sertifikalar[${certificateCount}].AlinmaYili" required="required" />
+                      </div>
+                      <div class="col-md-3">
+                          <div class="btn-rep text-center">
+                              <button type="button" class="remove-certificate"><i class="bx bx-trash"></i> Kaldır</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          `;
+
+                certificateRepeater.appendChild(newCertificateItem);
+
+
+            addRemoveEvent(newCertificateItem, 'certificate');
+            }
+        
+     
+
+        if (event.target && event.target.id === 'addReference') {
+            const referenceRepeater = document.getElementById('referenceRepeater');
+            const referenceItems = referenceRepeater.getElementsByClassName('reference-item');
+            const referenceCount = referenceItems.length; 
+
+          
+            const newReferenceItem = document.createElement('div');
+            newReferenceItem.classList.add('reference-item');
+            newReferenceItem.innerHTML = `
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="referenceName">Referans Adı:</label>
+                        <input type="text" class="form-control" name="Referanslar[${referenceCount}].Ad" required="required" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="referencePosition">Pozisyon:</label>
+                        <input type="text" class="form-control" name="Referanslar[${referenceCount}].Pozisyon" required="required" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="referenceContact">İletişim Bilgileri:</label>
+                        <input type="text" class="form-control" name="Referanslar[${referenceCount}].IletisimBilgileri" required="required" />
+                    </div>
+                    <div class="col-md-3">
+                        <div class="btn-rep text-center">
+                            <button type="button" class="remove-reference"><i class="bx bx-trash"></i> Kaldır</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        
+            referenceRepeater.appendChild(newReferenceItem);
+
+           
+            addRemoveEvent(newReferenceItem, 'reference');
+        }
+
+
+
+   
+        
+        
+        
+        // if (event.target && event.target.id === 'addCertificate') {
+        //         const certificateRepeater = document.getElementById('certificateRepeater');
+        //         const certificateItem = event.target.closest('.certificate-item');
+        //         const newCertificate = certificateItem.cloneNode(true);
+        //         newCertificate.querySelectorAll('input').forEach(input => input.value = '');
+        //         certificateRepeater.appendChild(newCertificate);
+        //         addRemoveEvent(newCertificate, 'certificate');
+        //     }
+        //     // Referans ekleme
+        //     if (event.target && event.target.id === 'addReference') {
+        //         const referenceRepeater = document.getElementById('referenceRepeater');
+        //         const referenceItem = event.target.closest('.reference-item');
+        //         const newReference = referenceItem.cloneNode(true);
+        //         newReference.querySelectorAll('input').forEach(input => input.value = '');
+        //         referenceRepeater.appendChild(newReference);
+        //         addRemoveEvent(newReference, 'reference');
+        //     }
+            // Yabancı dil ekleme
+            // if (event.target && event.target.id === 'addLanguage') {
+            //     const languageRepeater = document.getElementById('languageRepeater');
+            //     const languageItem = event.target.closest('.language-item');
+            //     const newLanguage = languageItem.cloneNode(true);
+            //     newLanguage.querySelectorAll('input').forEach(input => input.value = '');
+            //     languageRepeater.appendChild(newLanguage);
+            //     addRemoveEvent(newLanguage, 'language');
+            // }
+        });
+
+      
+        function addRemoveEvent(element, type) {
+            element.querySelector(`.remove-${type}`).addEventListener('click', function () {
+                element.remove();
+            });
+        }
+
+        // Mevcut "Kaldır" butonlarına olay ekleme
+        document.querySelectorAll('.remove-education').forEach(button => {
+            button.addEventListener('click', function () {
+                button.closest('.education-item').remove();
+            });
+        });
+        document.querySelectorAll('.remove-experience').forEach(button => {
+            button.addEventListener('click', function () {
+                button.closest('.experience-item').remove();
+            });
+        });
+         document.querySelectorAll('.remove-skill').forEach(button => {
+             button.addEventListener('click', function () {
+                 button.closest('.skill-item').remove();
+             });
+         });
+        document.querySelectorAll('.remove-certificate').forEach(button => {
+            button.addEventListener('click', function () {
+                button.closest('.certificate-item').remove();
+            });
+        });
+        document.querySelectorAll('.remove-reference').forEach(button => {
+            button.addEventListener('click', function () {
+                button.closest('.reference-item').remove();
+            });
+        });
+
+    </script>
+
+
+
+
+<script>
+    let aramaSayisi = 0;
+
+    document.getElementById('meslekSearch').addEventListener('keyup', async function () {
+        const searchTerm = this.value;
+
+        if (searchTerm.length < 3) {
+            document.getElementById('meslekList').style.display = 'none'; 
+            return;
+        }
+
+        aramaSayisi++;
+
+        try {
+            const response = await fetch(`/IsArayan/MeslekAra?searchTerm=${encodeURIComponent(searchTerm)}`);
+
+            if (!response.ok) {
+                throw new Error('Meslek arama isteği başarısız oldu: ' + response.statusText);
+            }
+
+            const meslekler = await response.json();
+
+            const meslekList = document.getElementById('meslekList');
+            meslekList.innerHTML = '';
+
+            if (Array.isArray(meslekler) && meslekler.length > 0) {
+                meslekler.forEach(meslek => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = meslek.text || "Tanımsız Meslek";
+                    li.setAttribute('data-value', meslek.value || "");
+
+                    li.onclick = function () {
+                        document.getElementById('meslekSearch').value = this.textContent;
+
+                        const meslekIdInput = document.getElementById('meslekId');
+                        if (meslekIdInput) {
+                            meslekIdInput.value = this.getAttribute('data-value');
+                        } else {
+                            console.error("meslekId öğesi bulunamadı.");
+                        }
+
+                        meslekList.style.display = 'none';
+                        this.parentNode.innerHTML = '';
+
+
+
+
+                    };
+
+                    meslekList.appendChild(li);
+                });
+
+                meslekList.style.display = 'block';
+            } else {
+                meslekList.style.display = 'none';
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    // Meslek listesi dışında bir yere tıklanınca listeyi kapatma
+    document.addEventListener('click', function (e) {
+        const meslekList = document.getElementById('meslekList');
+        const meslekSearch = document.getElementById('meslekSearch');
+
+        if (!meslekList.contains(e.target) && e.target !== meslekSearch) {
+            meslekList.style.display = 'none';
+        }
+    });
+</script>
+
+
+
+
+
+
+    

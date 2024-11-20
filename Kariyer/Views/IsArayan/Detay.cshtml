@@ -1,0 +1,197 @@
+@model OzgecmisDetayViewModel
+
+    <section class="candidate-details pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="candidate-profile">
+                    <img src="~/images/@Model.Foto" style="width:150px; height:150px;">
+                        <h3> @Model.AdSoyad </h3>
+                        <p>@Model.MeslekAd</p>
+                        <ul>
+                            <li>
+                                <a href="tel:@Model.Telefon">
+                                    <i class='bx bxs-phone'></i>
+                                     @Model.Telefon 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:@Model.Eposta">
+                                    <i class='bx bxs-location-plus'></i>
+                                    @Model.Eposta
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="candidate-social">
+                            <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="candidate-profile mt-3">
+
+                        <div class="resume-content basic-info-text">
+                            <h3>
+                                Kişisel Bilgiler
+                            </h3>
+                            <ul>
+                                <li>
+                                    <span>Doğrum Tarihi:</span>
+                                    @Model.DogumTarihi
+                                </li>
+                                <li>
+                                    <span>İkamet Bilgileri:</span>
+                                    @Model.Sehir / @Model.Ilce
+                                </li>
+                                <li>
+                                    <span>Ehliyet:</span>
+                                    
+                                </li>
+                                <li>
+                                    <span>Cinsiyet:</span>
+                                    @Model.Cinsiyet
+                                </li>
+                                <li>
+                                    <span>Medeni Hal:</span>
+                                    @Model.MedeniHal
+                                </li>
+                                <li>
+                                    <span>Askerlik:</span>
+                                    Tamamlandı
+                                </li>
+                                <li>
+                                    <span>Sürücü Belgesi:</span>
+                                    @Model.SurucuBelge
+                                </li>
+                                <li>
+                                    <span>SRC Belgesi:</span>
+                                    @Model.SrcBelge
+                                </li>
+                            <li>@if(@Model.EngelDurumu == false)
+                                {
+                                    <span>Engel Durumu: Yok</span>
+                                       
+                                }else{
+                                    <span>Engel Durumu: Var</span>
+                                }
+                              
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="candidate-info-text">
+                        <h3>
+                            <i class='bx bx-user-circle'></i>
+                            Özet
+                        </h3>
+                    <p> @Model.NitelikAd </p>
+                    </div>
+
+                    <div class="candidate-info-text candidate-education">
+                        <h3>
+                            <i class='bx bx-book-reader'></i>
+                            Eğitim Bilgileri
+                        </h3>
+                    @foreach(var Egitim in Model.Egitimler)
+                    {
+                           <div class="education-info">
+                            <div class="d-flex">
+                                <h4>@Egitim.OkulAd</h4>
+                                <span style="padding-left:9px;">@Egitim.MezuniyetYil</span>
+                            </div>
+                            <p>@Egitim.Bolum</p>
+                            <span>@Egitim.MezuniyetBigi?.Ad</span>
+                        </div>
+                        <hr />
+                    }
+                 
+                   
+                    </div>
+
+                    <div class="candidate-info-text candidate-education">
+
+                        <h3>
+                            <i class='bx bx-briefcase'></i>
+                            İş Deneyimleri
+                        </h3>
+
+                        <div class="education-info">
+                        @foreach(var Deneyim in Model.Deneyimler)
+                        {
+                            
+                     
+                        <div class="d-flex">
+                            <h4>
+                                    @Deneyim.KurumAd
+                            </h4>
+                                <span style="padding-left:9px;">@Deneyim.BasBityil</span>
+                        </div>
+                        <p><b>@Deneyim.Pozisyon</b></p>
+                        <span>@Deneyim.Acıiklama</span>
+                        <hr />
+                          
+                        }
+                        </div>
+                    
+                    </div>
+
+                    <div class="candidate-info-text candidate-experience">
+                      <div class="resume-content skill">
+                            <h3>
+                                <i class='bx bx-check-shield'></i>
+                                Beceriler
+                        </h3> @foreach (var Beceriler in Model.Beceriler)
+                        {
+
+                            <span>@Beceriler!.Beceri</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: @Beceriler.Yuzde%" aria-valuenow="@Beceriler.Yuzde" aria-valuemin="0" aria-valuemax="100">@Beceriler.Yuzde%</div>
+                            </div>
+
+                            }
+
+                          
+                        </div>
+                  
+                  
+                    </div>
+                @foreach(var dil in Model.YabanciDiller)
+                {
+                  <div class="candidate-info-text candidate-skill">
+                        <h3>
+                            <i class='bx bx-book-bookmark'></i>
+                            Yabancı Diller
+                        </h3>
+
+                        <ul>
+                            <li class="text-center">
+                                <h6>
+                                   @dil.Dil
+                                </h6>
+                                <span style="padding-left:9px;">@dil.Seviye</span>
+                            </li>
+                            <li class="text-center">
+                                <h6>
+                                    @dil.Dil
+                                </h6>
+                                <span style="padding-left:9px;">@dil.Seviye</span>
+                            </li>
+
+                        </ul>
+                    </div>
+   
+                }
+               
+                    <div class="candidate-info-text text-center">
+                        <div class="theme-btn">
+                        <a href ="@Url.Action("DownloadPDF", "IsArayan", new { id = Model.Id })" class="default-btn">İndir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Candidate Details End -->

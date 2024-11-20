@@ -1,0 +1,184 @@
+﻿ <!doctype html>
+<html lang="zxx">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <!-- Owl Carousel Theme Default CSS -->
+    <link rel="stylesheet" href="~/assets/css/owl.theme.default.min.css">
+    <!-- Box Icon CSS-->
+    <link rel="stylesheet" href="~/assets/css/boxicon.min.css">
+    <!-- Flaticon CSS-->
+    <link rel="stylesheet" href="~/assets/fonts/flaticon/flaticon.css">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="~/assets/css/magnific-popup.css">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="~/assets/css/meanmenu.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="~/assets/css/nice-select.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="~/assets/css/dark.css">
+    <link rel="stylesheet" href="~/assets/css/Site2.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="</assets/css/responsive.css">
+    <!-- Title CSS -->
+    <title>Jovie - Job Board & Portal HTML Template</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+   
+</head>
+
+<body>
+
+    <!-- Pre-loader End -->
+    <!-- Navbar Area Start -->
+   
+    <!-- Navbar Area End -->
+    <!-- Page Title Start -->
+    <section class="page-title title-bg10">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <h2>Mesajlarım</h2>
+                <ul>
+                    <li>
+                        <a href="Profil.html">Profil</a>
+                    </li>
+                    <li>Mesajlarım</li>
+                </ul>
+            </div>
+        </div>
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- Page Title End -->
+    <div class="sidebar .container bg-color">
+        
+
+
+        <ul style="margin: 0.5rem" class="theme-dark bg-color">
+
+
+            <br />
+
+            <li class="gelen-kutusu" onclick="loadEmails('inbox')">Gelen Kutusu</li>
+            <li class="gelen-kutusu" onclick="loadEmails('sent')">Giden Kutusu</li>
+            <li class="gelen-kutusu" onclick="loadEmails('spam')">Spam</li>
+
+        </ul>
+    </div>
+    
+   
+    <!-- Main Content -->
+    <div class="main-content bg-color">
+        <div class="inbox bg-color">
+            <div class="inbox-header bg-color" id="folder-title">Gelen Kutusu</div>
+            <ul class="email-list" id="emailList">
+                <!-- E-postalar buraya yüklenecek -->
+            </ul>
+        </div>
+
+        <div class="email-preview bg-color" id="emailPreview">
+            <h4>E-posta Önizlemesi</h4>
+            <p>Bir e-posta seçmek için listeye tıklayın.</p>
+        </div>
+    </div>
+    </div>
+    <!-- Testimonial Section Start -->
+    <!-- Testimonial Section End -->
+    <!-- Subscribe Section Start -->
+    <!-- Subscribe Section End -->
+    <!-- Footer Section Start -->
+  
+    <!-- Footer Section End -->
+    <script>
+
+        const emails = {
+            inbox: [
+                { sender: 'Ali Yılmaz', subject: 'Toplantı Detayları', date: '17 Eylül 2024', preview: 'Merhaba, yarınki toplantının detayları aşağıdadır...' },
+                { sender: 'Eda Demir', subject: 'Yeni Proje Teklifi', date: '16 Eylül 2024', preview: 'Size yeni bir proje teklifi gönderdik. Detaylar...' },
+                { sender: 'Hakan Kaya', subject: 'Ödeme Bildirimi', date: '15 Eylül 2024', preview: 'Son ödeme bildiriminiz aşağıda yer almaktadır...' },
+                
+            ],
+            sent: [
+                { sender: 'Sen', subject: 'Proje Raporu', date: '13 Eylül 2024', preview: 'Proje raporunu gönderdim. Gözden geçirebilirsin...' },
+                { sender: 'Sen', subject: 'Fiyat Teklifi', date: '12 Eylül 2024', preview: 'Fiyat teklifimizi gönderdim. Detaylar aşağıdadır...' }
+            ],
+            spam: [
+                { sender: 'Reklamcı', subject: 'İndirim Fırsatları!', date: '11 Eylül 2024', preview: 'Büyük indirim fırsatları sizi bekliyor. Kaçırmayın!' },
+                { sender: 'Spam Mail', subject: 'Hediye Kazandınız!', date: '10 Eylül 2024', preview: 'Tebrikler! Büyük ödülü kazandınız. Hemen tıklayın...' }
+            ]
+        };
+
+        function loadEmails(folder) {
+            const emailList = document.getElementById('emailList');
+            const folderTitle = document.getElementById('folder-title');
+            folderTitle.innerText = folder === 'inbox' ? 'Gelen Kutusu' : folder === 'sent' ? 'Giden Kutusu' : 'Spam';
+            emailList.innerHTML = '';
+
+            emails[folder].forEach(email => {
+                const li = document.createElement('li');
+                li.classList.add('email-item');
+                li.innerHTML = `
+                                                                                                     <div class="email-sender">${email.sender}</div>
+                                                                                                     <div class="email-subject">${email.subject}</div>
+                                                                                                     <div class="email-date">${email.date}</div>
+                                                                                                 `;
+                li.onclick = () => showPreview(email.subject, email.sender, email.preview);
+                emailList.appendChild(li);
+            });
+        }
+
+        function showPreview(subject, sender, content) {
+            const previewDiv = document.getElementById('emailPreview');
+            previewDiv.innerHTML = `
+                                                                                                 <h4>${subject}</h4>
+                                                                                                 <p><strong>Gönderen:</strong> ${sender}</p>
+                                                                                                 <p>${content}</p>
+                                                                                             `;
+        }
+
+        // İlk yüklemede Gelen Kutusu'nu göster
+        loadEmails('inbox');
+
+        script.js
+        document.getElementById('darkModeToggle').addEventListener('click', function () {
+            document.body.classList.toggle('switchbox');
+        });
+
+       
+    </script>
+    <!-- Back To Top Start -->
+    <div class="top-btn">
+        <i class='bx bx-chevrons-up bx-fade-up'></i>
+    </div>
+    <!-- Back To Top End -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <!-- Nice Select JS -->
+    <script src="~/assets/js/jquery.nice-select.min.js"></script>
+    <!-- Magnific Popup JS -->
+    <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Subscriber Form JS -->
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <!-- Form Velidation JS -->
+    <script src="~/assets/js/form-validator.min.js"></script>
+    <!-- Contact Form -->
+    <script src="~/assets/js/contact-form-script.js"></script>
+    <!-- Meanmenu JS -->
+    <script src="~/assets/js/meanmenu.js"></script>
+    <!-- Custom JS -->
+    <script src="~/assets/js/custom.js"></script>
+</body>
+</html> 

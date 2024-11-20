@@ -1,0 +1,43 @@
+﻿@model ProfilViewModel
+<section class="page-title title-bg10">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <h2>Hesap</h2>
+            <ul>
+                <li>
+                    <a asp-action="Anasayfa">Anasayfa</a>
+                </li>
+                <li>Hesap</li>
+            </ul>
+        </div>
+    </div>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</section>
+
+
+<section class="account-section ptb-100">
+    <div class="container">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <h2>Kullanıcı Silme Onayı</h2>
+                <p>Bu kullanıcıyı silmek istediğinize emin misiniz?</p>
+                <p><strong>@Model.AdSoyad</strong></p>
+                <p>Bu işlem, bu kullanıcıya ait tüm iş ilanlarını da silecektir. Geri alınamaz!</p>
+                <form asp-action="SilOnay" asp-controller="Hesap" method="post">
+                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    <a asp-action="Profil" class="btn btn-secondary">İptal</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+

@@ -1,0 +1,53 @@
+﻿@model ResetPasswordViewModel
+
+<section class="page-title title-bg14">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <h2>Şifre Yenileme</h2>
+            <ul>
+                <li>
+                    <a asp-action ="Anasayfa" asp-controller="Home">Anasayfa</a>
+                </li>
+                <li>Şifre Yenileme</li>
+            </ul>
+        </div>
+    </div>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</section>
+
+<div class="reset-password ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-3">
+                <form class="reset-form" asp-action="SifreSifirlama" asp-controller="Hesap" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  
+                    <div class="form-group">
+                        <label>Yeni Şifre</label>
+                        @Html.TextBoxFor(m => m.NewPassword, new { @class = "form-control", type = "password", required = "required", placeholder = "Yeni Şifre" })
+                        <span asp-validation-for="NewPassword" class="text-danger"></span>
+                       
+                    </div>
+
+                    <div class="form-group">
+                        <label>Yeni Şifre Onayı</label>
+                        @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", type = "password", required = "required", placeholder = "Şifreyi Onayla" })
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                     
+
+                    </div>
+                
+                   
+
+                    <div class="reset-btn text-center">
+                        <button type="submit">Şifreyi Sıfırla</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

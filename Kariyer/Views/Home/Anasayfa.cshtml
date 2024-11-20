@@ -1,0 +1,345 @@
+@model AnasayfaViewModel
+
+        <!-- Banner Section Start -->
+        <div class="banner-section banner-style-five">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="banner-content text-center">
+                            <h2>Altıeylül Belediyesi Kariyer Merkezi</h2>
+                            <p>İşverenler ile İş Arayanların Ortak Platformu</p>
+                        </div>
+
+                <form asp-action="Anasayfa" method="get"  class="find-form">
+                 
+                 
+                            <div class="row">
+
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                <input type="text" name="MeslekAnahtarKelime" class="form-control" id="exampleInputEmail1" placeholder="Meslek veya Anahtar Kelime">
+                                        <i class="bx bx-search-alt"></i>
+                                    </div>
+                                </div>
+                       
+                        <div class="col-lg-3">
+                            @Html.DropDownListFor(x => x.CalismaSekliAd, Model.CalismaSekliListesi, "İş Türü", new { @class = "tur " })
+
+                                </div>
+
+                                <div class="col-lg-3">
+                           
+                            @Html.DropDownListFor(x => x.KategoriAd, Model.KategoriListesi, "Kategori", new { @class = "category " })
+
+                                 
+                                </div>
+
+                                <div class="col-lg-3">
+                            <button  type="submit" class="find-btn">
+                                        Ara
+                                        <i class='bx bx-search'></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Banner Section End -->
+        <!-- Job Info Section Start -->
+        <div class="job-info-o pt-100 pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="looking-job">
+                            <div class="media">
+                                <i class='flaticon-group align-self-start mr-3'></i>
+                                <div class="media-body">
+                                    <h5 class="mt-0">İş İlanlarını Görüntüle</h5>
+                                    <p>
+                                        Size uygun iş ilanlarına başvurun, aradığınız işi bulun.
+                                    </p>
+
+                                    <a asp-action="Is_Ilanlari">
+                                        Görüntüle
+                                        <i class='bx bx-chevrons-right'></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="recruiting-card">
+                            <div class="media">
+                                <i class='flaticon-resume align-self-start mr-3'></i>
+                                <div class="media-body">
+                                    <h5 class="mt-0">İş İlanı Vermek İstiyorum</h5>
+                                    <p>İlanınızı yayınlayın, başvuruları toplayıp, inceleyin.</p>
+
+                            <a asp-action="Yeni_Is_Ilani" asp-controller="IsVeren">
+                                        Görüntüle
+                                        <i class='bx bx-chevrons-right'></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Job Info Section End -->
+        <!-- Counter Section Start -->
+        <div class="counter-section pt-100 pb-70">
+            <div class="container">
+                <div class="row counter-area">
+                    <div class="col-lg-3 col-6">
+                        <div class="counter-text">
+                            <i class="flaticon-resume"></i>
+                            <h2><span>@Model.AktifIsIlanlari</span></h2>
+                            <p>Aktif İş İlanı</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="counter-text">
+                            <i class="flaticon-recruitment"></i>
+                            <h2><span>225</span></h2>
+                            <p>Toplanan CV</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="counter-text">
+                            <i class="flaticon-portfolio"></i>
+                            <h2><span>@Model.UyeFirma</span></h2>
+                            <p>Üye Firma</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="counter-text">
+                            <i class="flaticon-employee"></i>
+                            <h2><span>@Model.KayitliKullanici</span></h2>
+                            <p>Kayıtlı Kullanıcı</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Counter Section End -->
+        <!-- Job Section End -->
+        <section class="job-style-two pt-100 pb-70">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Son Yayınlanan İş İlanları</h2>
+                    <div class="theme-btn text-center">
+                        <a asp-action="Is_Ilanlari" class="default-btn">
+                            Tüm İlanları Görüntüle
+                        </a>
+                    </div>           
+                </div>
+
+                <div class="row">
+             
+            @foreach (var ilan in Model.IsIlanlari!)
+            {
+                <form id="ilanDetayForm_@ilan.IlanIdEncrypted" method="get" asp-controller="Home" asp-action="FavoriEkle">
+
+                    <input type="hidden" name="ilanId" value="@ilan.IlanIdEncrypted" />
+                    <div class="col-lg-12">
+                        <div class="job-card-two">
+                            <div class="row align-items-center">
+                                <div class="col-md-1">
+
+
+                                    <div class="company-logo">
+                                        @if (!string.IsNullOrEmpty(ilan.Foto))
+                                        {
+
+
+
+                                            <button type="submit"  >
+                                                <img src="~/images/@ilan.Foto" alt="Şirket Logosu" style="width: 40px;height: 40px;" />
+                                            </button>
+                                       
+
+
+                                        }
+                                        else
+                                        {
+                                            <p>Logo mevcut değil.</p>
+                                        }
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="job-info">
+
+                                        <h3>
+
+
+                                            <button type="submit">@ilan.IlanBaslik</button>
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                <i class='bx bx-building'></i>
+                                                @ilan.FirmaAd
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-calendar'></i>
+                                                @if (ilan.BasTarih.HasValue)
+                                                {
+                                                    @ilan.BasTarih.Value.ToShortDateString()
+                                                }
+                                                else
+                                                {
+                                                    <span>Tarih mevcut değil</span>
+                                                }
+                                            </li>
+                                        </ul>
+                                   
+                                    <span>@ilan.CalismaSekli</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="theme-btn text-end">
+                                        <button type="submit"  class="default-btn">
+                                            İlanı İncele
+                                        </button>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            }
+          
+                </div>
+            </div>
+        </section>
+        <!-- Job Section End -->
+        <!-- Compnay Location Section Start -->
+        <section class="company-location pt-100 pb-70">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Kariyer Rehberi</h2>
+                    <p>İş Arama Süreçlerinizde ve Kişisel Gelişiminize Yardımcı Olacak Rehberimizi İnceleyebilirsiniz.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="location-img">
+                                <img src="~/assets/img/location/u4.png" alt="location image">
+
+                                <div class="location-text">
+                                    <div class="d-table">
+                                        <div class="d-table-cell">
+                                            <h3>İş Bulma Yöntemleri</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="location-img">
+                                <img src="~/assets/img/location/u1.png" alt="location image">
+
+                                <div class="location-text">
+                                    <div class="d-table">
+                                        <div class="d-table-cell">
+                                            <h3>CV Nasıl Hazırlanır?</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <a href="job-list.html">
+                            <div class="location-img">
+                                <img src="~/assets/img/location/u2.png" alt="location image">
+
+                                <div class="location-text">
+                                    <div class="d-table">
+                                        <div class="d-table-cell">
+                                            <h3>Mülakat Hazırlığı ve Teknikler</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <a href="job-list.html">
+                            <div class="location-img">
+                                <img src="~/assets/img/location/u3.png" alt="location image">
+
+                                <div class="location-text">
+                                    <div class="d-table">
+                                        <div class="d-table-cell">
+                                            <h3>İş Başvurularında Sıklıkla Yapılan Hatalar</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="location-img">
+                                <img src="~/assets/img/location/u5.png" alt="location image">
+
+                                <div class="location-text">
+                                    <div class="d-table">
+                                        <div class="d-table-cell">
+                                            <h3>Kişisel Gelişime Önem Verin</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="location-img">
+                                <img src="~/assets/img/location/u6.png" alt="location image">
+
+                                <div class="location-text">
+                                    <div class="d-table">
+                                        <div class="d-table-cell">
+                                            <h3>Özgeçmişin 5 Altın Kuralı</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Compnay Location Section End -->
+        <script>
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+       
+        var button = event.submitter;
+        console.log('Butonun değeri:', button.value);
+    });
+});
+
+        </script>

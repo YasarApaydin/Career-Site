@@ -1,0 +1,38 @@
+﻿@model ResetPasswordViewModel
+
+<section class="page-title title-bg14">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <h2>Şifre Yenileme</h2>
+            <ul>
+                <li>
+                    <a asp-action="Anasayfa" asp-controller="Home">Anasayfa</a>
+                </li>
+                <li>Şifre Yenileme</li>
+            </ul>
+        </div>
+    </div>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</section>
+
+<div class="reset-password ptb-100">
+    <div class="container">
+        <div class="row">
+            <form method="post" class="reset-form" asp-action="Cikis" asp-controller="Home">
+            <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-3">
+              
+                    <div class="alert alert-success">Şifreniz Başarıyla Sıfırlandı</div>
+                <div class="reset-btn text-center">
+                    <button type="submit">Şifreyi Sıfırla</button>
+                </div>
+
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

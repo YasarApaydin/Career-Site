@@ -1,0 +1,407 @@
+﻿@model IsArayanViewModel
+<h4>Kişisel Bilgiler</h4>
+<div  class="signup-form">
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <div class="form-group">
+                <label>Fotoğrafınızı Yükleyiniz</label>
+
+                @Html.TextBoxFor(x => x.FotoDosya, new
+                    {
+                        type = "file",
+                        accept = "image/png, image/jpg, image/jpeg",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                 <label for="SehirId"> Şehir</label>
+                 @Html.DropDownListFor(x => x.SehirId, Model.Sehirler, "Şehir Seçin", new { @class = "form-control ", @id = "sehirDropdown" })
+               
+               
+        </div>
+            <strong><span asp-validation-for="SehirId" class="text-danger"></span></strong>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label for="IlceId" >İlçe</label>
+                @Html.DropDownListFor(x => x.IlceId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"), "İlçe Seçin", new { @class = "form-control nice-select", id = "ilceDropdown" })
+                
+                </div>
+            <strong> <span asp-validation-for="IlceId" class="text-danger"></span></strong>
+
+        </div>
+       
+        <div id="is-arayan-page" class="col-lg-12 col-12">
+            <div class="form-group">
+
+                <label>Adres</label>
+                @Html.TextBoxFor(x => x.Adres, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required"
+                    })
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Doğum Tarihi</label>
+
+                @Html.TextBoxFor(x => x.DogumTar, new
+                    {
+                        type = "date",
+                        @class = "form-control",
+                        required = "required"
+                    })
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Medeni Hal</label>
+          @Html.DropDownListFor(x => x.MedeniHal,
+                       new SelectList(Enum.GetValues(typeof(MedeniHal)).Cast<MedeniHal>().Select(e => new { Value = (int)e, Text = e.ToString() }), "Value", "Text"),
+                       "Seçiniz",
+                       new { @class = "form-control", required = "required" })
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Cinsiyet</label>
+                @Html.DropDownListFor(x => x.CinsiyetId, new SelectList(Model.Cinsiyetler, "Id", "Ad"),
+                         "Seçiniz", new { @class = "form-control", required = "required" })
+
+
+                 
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Uyruk</label>
+               @Html.DropDownListFor(x => x.UyrukId, new 
+               SelectList(Model.Uyruklar,"Id","Ad"),"Seçiniz",
+               new {@class ="form-control ",
+            
+
+                         }
+               )
+             
+
+
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Eğitim Durumu</label>
+                @Html.DropDownListFor(x => x.EgitimId, new 
+                    SelectList(Model.Egitimler, "Id", "Ad"), "Seçiniz",
+                new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Meslek</label>
+                @Html.DropDownListFor(x => x.MeslekId, new
+                         SelectList(Model.Meslekler, "Id", "Ad"), "Seçiniz",
+                         new { @class = "form-control" })
+            
+            @*     @Html.TextBoxFor(m => m.Meslek, new { @class = "form-control", type = "text", @id = "meslekSearch", placeholder = "İş Unvanı", required = "required" })
+                <span asp-validation-for="MeslekId" class="text-danger"></span>
+                <input type="hidden" id="meslekId" name="MeslekId" value="@Model.MeslekId" />
+                <ul id="meslekList"  style="display:none; position: absolute; z-index: 1000;"></ul> *@
+
+
+           
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>İş Deneyim Süresi</label>
+                 @Html.DropDownListFor(x => x.DeneyimId, new
+                         SelectList(Model.Deneyimler, "Id", "Ad"), "Seçiniz",
+                         new { @class = "form-control" }
+                         ) 
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Sürücü Belgesi</label>
+                @Html.DropDownListFor(x => x.SurucuBelgeId, new
+                         SelectList(Model.SurucuBelgeler, "Id", "Ad"), "Seçiniz",
+                         new { @class = "form-control" }
+                         )
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>SRC Belgesi</label>
+                @Html.DropDownListFor(x => x.SrcbelgeId, new
+                         SelectList(Model.Srcbelgeler, "Id", "Ad"), "Seçiniz",
+                         new { @class = "form-control" }
+                         )
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Engel Durumu</label>
+                @Html.DropDownListFor(x => x.EngelDurum, new SelectList(Enum.GetValues(typeof(EngelDurum))),
+                         "Seçiniz", new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-12">
+            <div class="form-group">
+            <label>Çalışmak İstediğiniz Pozisyon</label>
+             
+                @Html.TextBoxFor(m => m.PozisyonId, new { @class = "form-control", type = "text", placeholder = "En fazla 10 pozisyon seçebilirsiniz...", @id = "pozisyonSearch" })
+                <span asp-validation-for="PozisyonId" class="text-danger"></span>
+                <input type="hidden" id="hiddenSelectedPozisyonIds" name="SelectedPozisyonIds" />
+
+                <ul id="pozisyonList" class="list-group-posizyon" style="display:none; position: absolute; z-index: 1000; max-height: 200px; overflow-y: auto;"></ul>
+                <div id="selectedPozisyonContainer" style="margin-top: 10px;"></div>
+                
+
+            </div>
+        </div>
+       
+    </div>
+    <div class="signup-btn text-center">
+        <button type="submit">Kaydı Tamamla</button>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('select').niceSelect();
+
+        $('#sehirDropdown').val('').niceSelect('update');
+        $('#sehirDropdown').change(function () {
+            var sehirId = $(this).val(); 
+          
+
+            if (sehirId) {
+
+
+                $.ajax({
+                    url: '@Url.Action("GetIlceler", "IsArayan")',
+                    type: 'GET',
+                    data: { sehirId: sehirId },
+                    success: function (data) {
+                       
+
+                        var ilceDropdown = $('#ilceDropdown');
+                        ilceDropdown.empty(); 
+                        ilceDropdown.append('<option value="">İlçe Seçin</option>'); 
+
+                        $.each(data, function (index, ilce) {
+                            
+                         
+                            ilceDropdown.append($('<option>').text(ilce.ad).attr('value', ilce.id));
+                          
+                        });
+
+                        $('.nice-select').niceSelect('update');
+                     
+                    },
+
+         
+                    error: function () {
+                        alert('İlçeler yüklenirken bir hata oluştu.');
+                       
+                    }
+                });
+            } else {
+                $('#ilceDropdown').empty().append('<option value="">İlçe Seçin</option>');
+                $('#ilceDropdown').niceSelect('update');
+              
+            }
+        });
+    });
+
+
+
+</script>
+@* 
+<script>
+    let aramaSayisi = 0;
+
+    document.getElementById('meslekSearch').addEventListener('keyup', async function () {
+        const searchTerm = this.value;
+
+        if (searchTerm.length < 3) {
+            document.getElementById('meslekList').style.display = 'none'; // Listeyi gizle
+            return;
+        }
+
+        aramaSayisi++;
+
+        try {
+            const response = await fetch(`/IsArayan/MeslekAra?searchTerm=${encodeURIComponent(searchTerm)}`);
+
+            if (!response.ok) {
+                throw new Error('Meslek arama isteği başarısız oldu: ' + response.statusText);
+            }
+
+            const meslekler = await response.json();
+
+            const meslekList = document.getElementById('meslekList');
+            meslekList.innerHTML = '';
+
+            if (Array.isArray(meslekler) && meslekler.length > 0) {
+                meslekler.forEach(meslek => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = meslek.text || "Tanımsız Meslek";
+                    li.setAttribute('data-value', meslek.value || "");
+
+                    li.onclick = function () {
+                        document.getElementById('meslekSearch').value = this.textContent;
+
+                        const meslekIdInput = document.getElementById('meslekId');
+                        if (meslekIdInput) {
+                            meslekIdInput.value = this.getAttribute('data-value');
+                        } else {
+                            console.error("meslekId öğesi bulunamadı.");
+                        }
+
+                        meslekList.style.display = 'none';
+                        this.parentNode.innerHTML = '';
+
+           
+                       
+                       
+                    };
+
+                     meslekList.appendChild(li);
+                });
+
+                meslekList.style.display = 'block';
+            } else {
+                meslekList.style.display = 'none';
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    // Meslek listesi dışında bir yere tıklanınca listeyi kapatma
+    document.addEventListener('click', function (e) {
+        const meslekList = document.getElementById('meslekList');
+        const meslekSearch = document.getElementById('meslekSearch');
+
+        if (!meslekList.contains(e.target) && e.target !== meslekSearch) {
+            meslekList.style.display = 'none';
+        }
+    });
+</script>
+ *@
+<script>
+    $(document).ready(function () {
+        var selectedPozisyonIds = [];
+
+        // Pozisyon arama
+        $('#pozisyonSearch').on('keyup', async function () {
+            const searchTerm = $(this).val();
+
+            if (searchTerm.length < 3) {
+                $('#pozisyonList').hide();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/IsArayan/PozisyonAra?searchTerm=${encodeURIComponent(searchTerm)}`);
+                if (!response.ok) {
+                    throw new Error('Arama isteği başarısız oldu: ' + response.statusText);
+                }
+
+                const pozisyonlar = await response.json();
+                $('#pozisyonList').empty();
+
+                if (Array.isArray(pozisyonlar) && pozisyonlar.length > 0) {
+                    pozisyonlar.forEach(pozisyon => {
+                        $('#pozisyonList').append(`
+                                <li class="list-group-item" data-value="${pozisyon.value}">${pozisyon.text}</li>
+                            `);
+                    });
+                    $('#pozisyonList').show();
+                } else {
+                    $('#pozisyonList').hide();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        // Pozisyon seçme
+        $(document).on('click', '.list-group-item', function () {
+            var value = $(this).data('value');
+            var text = $(this).text();
+
+            // Seçilen pozisyonları kontrol et ve maksimum 10 seçim kontrolü
+            if ($.inArray(value, selectedPozisyonIds) === -1) {
+                if (selectedPozisyonIds.length < 10) {
+                    selectedPozisyonIds.push(value); // Seçilen GUID'leri array'e ekle
+
+                    // GUID listesini gizli input'a JSON formatında aktar
+                    $('#hiddenSelectedPozisyonIds').val(JSON.stringify(selectedPozisyonIds));
+
+                    $('#selectedPozisyonContainer').append(`
+                            <div class="selected-item" data-value="${value}">
+                                ${text} <span class="remove-item" style="cursor: pointer; color: red;">&#10005;</span>
+                            </div>
+                        `);
+                    $('#error-message').hide();
+                } else {
+                    $('#error-message').text('En fazla 10 pozisyon seçebilirsiniz.').show();
+                }
+            }
+
+            // Arama kutusunu temizle ve pozisyon listesini gizle
+            $('#pozisyonSearch').val('');
+            $('#pozisyonList').hide();
+        });
+
+        // Seçilen pozisyonu kaldırma
+        $(document).on('click', '.remove-item', function () {
+            var item = $(this).closest('.selected-item');
+            var value = item.data('value');
+
+            // Seçilen pozisyonu array'den çıkar
+            selectedPozisyonIds = selectedPozisyonIds.filter(function (v) {
+                return v != value;
+            });
+
+            // Güncellenmiş GUID listesini gizli input'a aktar
+            $('#hiddenSelectedPozisyonIds').val(JSON.stringify(selectedPozisyonIds));
+
+            item.remove();
+        });
+
+        // Pozisyon listesi dışında bir yere tıklanınca listeyi gizle
+        $(document).on('click', function (e) {
+            // Eğer tıklanan öğe 'selectedPozisyonContainer' veya onun altındaki öğeler değilse
+            if (!$(e.target).closest('#pozisyonList').length && !$(e.target).is('#pozisyonSearch') && !$(e.target).closest('#selectedPozisyonContainer').length) {
+                $('#pozisyonList').hide();
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+

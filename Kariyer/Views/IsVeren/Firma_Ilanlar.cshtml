@@ -1,0 +1,194 @@
+﻿@model IsIlaniViewModel
+<section class="page-title title-bg10">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <h2>Hesap</h2>
+            <ul>
+                <li>
+                    <a asp-action="Anasayfa" asp-controller="Home">Anasayfa</a>
+                </li>
+                <li>Hesap</li>
+            </ul>
+        </div>
+    </div>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</section>
+<!-- Page Title End -->
+<!-- Account Area Start -->
+<section class="account-section ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="account-information">
+                    <div class="profile-thumb">
+                        <img src="~/images/@Model.Foto" alt="account holder image" class="profile-image">
+                        <h3>@Model.AdSoyad</h3>
+                        <p>@Model.Eposta</p>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <a asp-action="Profil" asp-controller="Hesap">
+                                <i class="bx bx-user"></i>
+                                Profilim
+                            </a>
+                        </li>
+
+                        @if (Model.kullaniciTür == 1)
+                        {
+                            <li>
+
+                                <a asp-controller="IsArayan" asp-action="Ozgecmis">
+                                    <i class="bx bxs-file-doc"></i>
+                                    Özgeçmişim
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="bx bx-briefcase"></i>
+                                    Başvurulan İş
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a asp-controller="Hesap" asp-action="mesajj">
+                                <i class="bx bx-envelope"></i>
+                                Mesajlar
+                            </a>
+                        </li>
+                        @if (Model.kullaniciTür == 2)
+                        {
+                            <li>
+                                <a class="active" asp-action="Firma_Ilanlar" asp-controller="IsVeren">
+                                    <i class="fas fa-bullhorn" ></i>
+                                    İlanlarım
+                                </a>
+                            </li>
+                        }
+
+                        @if (Model.kullaniciTür == 1)
+                        {
+                            <li>
+                                <a href="#">
+                                    <i class="bx bx-heart"></i>
+                                    Kaydedilen İşler
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a asp-controller="Hesap" asp-action="SifreYenile">
+                                <i class="bx bx-lock-alt"></i>
+                                Şifre değiştir
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Hesap" asp-action="SilOnay">
+                                <i class="bx bx-coffee-togo"></i> Hesap Sil
+                            </a>
+
+
+                        </li>
+                        <li>
+                            <form method="post" asp-controller="Home" asp-action="Cikis" style="display:inline;">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">
+                                    <i class="bx bx-log-out"></i>
+                                    Çıkış
+                                </a>
+                            </form>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                <div class="col-md-8">
+                    <section class="job-style-two job-list-section pt-3 pb-70">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                @foreach(var ilan in Model.IsIlanlari!)
+                                {
+                                     <div class="job-card-two">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="company-logo text-center align-content-center">
+                                                    <a asp-action="Ilan_Basvurular" asp-controller="IsVeren" asp-route-IlanNo="@ilan.IlanNo">
+                                                        <input type="hidden" id="encryptedUserId" value="@ilan.IlanNo" />
+                                                        <h6>Başvurular</h6>
+                                                        <h6>@ilan.basvuruSay</h6>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="job-info">
+                                                    <form id="ilanDetayForm_@ilan.IlanIdEncrypted" method="get" asp-controller="Home" asp-action="FavoriEkle">
+                                                        <input type="hidden" name="ilanId" value="@ilan.IlanIdEncrypted" />
+                                                        <h3>
+                                                            <button type="submit">@ilan.IlanBaslik</button>
+                                                        </h3>
+                                                    </form>
+                                                    <span>İlan No: <b>@ilan.IlanNo</b></span>
+                                                    <span>İlan Tarihi: <b>@ilan.BasTarih?.ToString("dd.MM.yyyy")</b></span>
+                                                    <span>Görüntüleme: <b>@ilan.Goruntulenme</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="btn-rep text-end d-flex">
+                                                    <a href="#" class="but">
+                                                        <i class="bx bx-pencil"></i>
+                                                    </a>
+                                                    <form method="post" asp-controller="IsVeren" asp-action="DeleteIlan" style="display:inline;" onsubmit="return confirmDelete();">
+                                                        <input type="hidden" name="IlanNo" value="@ilan.IlanNo" />
+                                                        
+                                                        <button type="submit" class="butdel">
+                                                            <i class="bx bx-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                               
+                                </div>
+
+
+                            </div>
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                            <i class='bx bx-chevrons-left bx-fade-left'></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">
+                                            <i class='bx bx-chevrons-right bx-fade-right'></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav> 
+                      
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Account Area End -->
+    <!-- Subscribe Section Start -->
+<script>
+    function confirmDelete() {
+        return confirm("Silmek istediğinize emin misiniz?");
+    }
+</script>

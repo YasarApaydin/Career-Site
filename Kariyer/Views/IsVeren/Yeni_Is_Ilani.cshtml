@@ -1,0 +1,301 @@
+@model IsIlaniViewModel
+        <!-- Page Title Start -->
+
+        <!-- Page Title End -->
+        <!-- Post Job Section Start -->
+        <div class="job-post ptb-100">
+            <div class="container">
+        <form method="post" enctype="multipart/form-data" class="job-post-from " id="jobPostForm" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <h2>İş İlanınızı Detayları İle Oluşturunuz</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>İlan Başlığı</label>
+                      @Html.TextBoxFor(x => x.IlanBaslik, new
+                        {
+                                type="text",
+                                @class="form-control",
+                                id = "exampleInput1",
+                                placeholder = "Örnek: Pazarlama Uzmanı",
+                                required = "required"
+                        })
+                        
+                    </div>
+                    <span><span asp-validation-for="IlanBaslik" class="text-danger"></span></span>
+                        </div>
+
+                         <div class="col-md-6">
+                    <div class="form-group">
+                                <label>Pozisyon</label>
+
+                        @Html.TextBoxFor(m => m.Pozisyon, new { @class = "form-control", type = "text", @id = "PozisyonSearch", placeholder = "Örnek: Pazarlama Uzmanı" ,required = "required" })
+                        <span asp-validation-for="PozisyonId" class="text-danger"></span>
+                        <input type="hidden" id="pozisyonId" name="PozisyonId" value="@Model.PozisyonId" />
+                        <ul id="pozisyonList" class="list-group" style="display:none; position: absolute; z-index: 1000; max-height: 200px; overflow-y: auto;"></ul>
+
+                        
+                    </div><span><span asp-validation-for="Pozisyon" class="text-danger"></span></span>
+                        </div> 
+
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Firma Ünvanı</label>
+                        @Html.TextBoxFor(x => x.IsVerenler!.FirmaUnvan, new { type = "text", @class = "form-control", id = "exampleInput2", @disabled = "disabled" })
+                      
+                    </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Firma E-Mail Adresi</label>
+                        @Html.TextBoxFor(x => x.Eposta, new { type = "email", @class = "form-control", id = "exampleInput3", @disabled = "disabled" })
+
+                       
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Firma Web Sitesi</label>
+                        @Html.TextBoxFor(x => x.IsVerenler!.FirmaWebAdres, new { type = "text", @class = "form-control", id = "exampleInput4", @disabled = "disabled" })
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Çalışma Şekli</label>
+
+                                @Html.DropDownListFor(x => x.CalismaSekliId , new SelectList(Model.CalismaSekilleri,"Id","Ad"),"Seçiniz")
+
+                    </div>  <span><span asp-validation-for="CalismaSekliId" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Deneyim</label>
+                        @Html.DropDownListFor(x => x.DeneyimId, new SelectList(Model.Deneyimler, "Id", "Ad"), "Seçiniz")
+
+                    </div>  <span><span asp-validation-for="DeneyimId" class="text-danger"></span></span>
+                            </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Cinsiyet</label>
+                        @Html.DropDownListFor(x => x.CinsiyetId, new SelectList(Model.Cinsiyetler, "Id", "Ad"), "Seçiniz")
+
+
+                    </div>
+                    <span><span asp-validation-for="CinsiyetId" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Eğitim Durumu</label>
+                               @Html.DropDownListFor(x => x.EgitimId, new SelectList(Model.Egitimler,"Id","Ad"),"Seçiniz")
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Maaş Aralığı</label>
+                            
+                        @Html.TextBoxFor(x => x.Maas, new { type = "text", @class = "form-control", placeholder = "15.000 - 20.000", id = "exampleInput33", required = "required" })
+                            </div>
+                    <span><span asp-validation-for="Maas" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Yapılacak İşin Konumu</label>
+                              
+                        @Html.TextBoxFor(x => x.CalismaKonumu, new { type = "text", @class = "form-control", id = "exampleInput5", placeholder = "Örnek: Balıkesir/Karesi", required = "required" })
+                            </div>
+                    <span><span asp-validation-for="CalismaKonumu" class="text-danger"></span></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>ALınacak Personel Sayısı</label>
+                      
+                        @Html.TextBoxFor(x => x.AlinacakPersonelSayi, new { type = "number", @class = "form-control", id = "exampleInput5", placeholder = "2", required = "required" })
+                    </div>  <span><span asp-validation-for="AlinacakPersonelSayi" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Yaş Aralığı (En Az - En Çok)</label>
+                               
+                        @Html.TextBoxFor(x => x.YasAralık, new { type = "text", @class = "form-control", id = "exampleInput5", placeholder = "Örnek: 18-35", required = "required" })
+
+                    </div>
+                    <span><span asp-validation-for="YasAralık" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">
+                                    İlan Açıklaması
+                                </label>
+                                
+                             
+                        @Html.TextAreaFor(x => x.IlanAciklama, new
+                            {
+                                @class = "form-control description-area",
+                                id = "exampleFormControlTextarea1",
+                                rows = "6",
+                                required = "required"
+    })
+                            </div>
+                    <span><span asp-validation-for="IlanAciklama" class="text-danger"></span></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">
+                                    Aranan Nitelikler
+                                </label>
+
+                      
+                            @Html.TextAreaFor(x => x.NitelikAd, new
+                                {
+                                    @class = "form-control description-area",
+                                    id = "exampleFormControlTextarea1",
+                                    rows = "6",
+                                    required = "required"
+                                })
+                              
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                    <button type="submit" onclick="showModal()" class="post-btn">
+                                İlanı Tamamla
+                        </button>
+                        
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Post Job Section End -->
+        <!-- Subscribe Section Start -->
+   
+        <!-- Subscribe Section End -->
+        <!-- Footer Section Start -->
+<!-- Modal -->
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="ilanModal" tabindex="-1" role="dialog" aria-labelledby="ilanModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ilanModalLabel">İş İlanı Başarıyla Yayınlandı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                İş ilanınız başarıyla yayınlandı.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function showModal() {
+        // Önce form validasyonunu kontrol et
+        var form = document.getElementById("jobPostForm");
+
+        // Formun geçerliliğini kontrol et
+        if (!form.checkValidity()) {
+          
+            form.classList.add("was-validated");
+            return false; // Modalı açma ve formu gönderme
+        }
+
+        // Eğer form geçerli ise, modalı göster
+        $('#ilanModal').modal('show');
+
+        // Modal gösterildikten sonra formu 2 saniye gecikmeli olarak gönder
+        setTimeout(function () {
+            form.submit(); // Formu gönder
+        }, 5000); 
+
+        return false; 
+    }
+</script>
+
+<script>
+    document.getElementById("jobPostForm").addEventListener("submit", function (event) {
+        // Formu geçersizse gönderimi durdur
+        if (!this.checkValidity()) {
+            event.preventDefault();  // Formu gönderme
+            event.stopPropagation(); // Diğer olayları durdur
+        }
+
+        // Hataları göstermek için Bootstrap gibi kütüphaneler kullanıyorsanız, bunları ekleyin
+        this.classList.add("was-validated");
+    }, false);
+</script>
+
+
+
+
+
+<script>
+    let aramaSayisi = 0;
+
+    document.getElementById('PozisyonSearch').addEventListener('keyup', async function () {
+        const searchTerm = this.value;
+
+        if (searchTerm.length < 3) {
+            document.getElementById('pozisyonList').style.display = 'none'; // Hide list if input is less than 3 chars
+            return;
+        }
+
+        aramaSayisi++;
+
+        try {
+            const response = await fetch(`/IsVeren/PozisyonAra?searchTerm=${encodeURIComponent(searchTerm)}`);
+
+            if (!response.ok) {
+                throw new Error('Pozisyon arama isteği başarısız oldu: ' + response.statusText);
+            }
+
+            const pozisyonlar = await response.json();
+            const pozisyonList = document.getElementById('pozisyonList');
+            pozisyonList.innerHTML = '';
+
+            if (Array.isArray(pozisyonlar) && pozisyonlar.length > 0) {
+                pozisyonlar.forEach(pozisyon => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = pozisyon.text || "Tanımsız Pozisyon";
+                    li.setAttribute('data-value', pozisyon.value || "");
+
+                    li.onclick = function () {
+                        document.getElementById('PozisyonSearch').value = this.textContent;
+
+                        const pozisyonIdInput = document.getElementById('pozisyonId');
+
+                        if (pozisyonIdInput) {
+                            pozisyonIdInput.value = this.getAttribute('data-value');
+                        } else {
+                            console.error("pozisyonId öğesi bulunamadı.");
+                        }
+
+                        pozisyonList.style.display = 'none';
+                        this.parentNode.innerHTML = '';
+                    };
+
+                    pozisyonList.appendChild(li);
+                });
+
+                pozisyonList.style.display = 'block'; // Show list with scroll enabled
+            } else {
+                pozisyonList.style.display = 'none';
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>

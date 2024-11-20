@@ -1,0 +1,455 @@
+﻿
+<!doctype html>
+<html lang="tr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+   
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <!-- Owl Carousel Theme Default CSS -->
+    <link rel="stylesheet" href="~/assets/css/owl.theme.default.min.css">
+    <!-- Box Icon CSS-->
+    <link rel="stylesheet" href="~/assets/css/boxicon.min.css">
+    
+    <!-- Flaticon CSS-->
+    <link rel="stylesheet" href="~/assets/fonts/flaticon/flaticon.css">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="~/assets/css/magnific-popup.css">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="~/assets/css/meanmenu.css">
+    <!-- Nice Select CSS -->
+   
+     <link rel="stylesheet" href="~/assets/css/nice-select.css"> 
+    
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- Dark CSS -->
+    <link rel="stylesheet" href="~/assets/css/dark.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/assets/css/responsive.css">
+
+
+    <!-- Title CSS -->
+    <title>Altıeylül Belediyesi - Kariyer Merkezi</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+    @await RenderSectionAsync("Styles", required: false)
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+
+       
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center; /* Ortaya yerleştirme */
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            justify-content: center; /* Ortaya yerleştirme */
+            align-items: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+       
+       
+          .nice-select .list {
+            max-height: 200px;
+            overflow-y: auto; 
+        }
+
+        .selected-item {
+            font-size: 15px;
+            border: 1px solid #ccc;
+            margin-bottom: 0.5px;
+            margin-top:2px;
+            display: inline-block;
+        }
+
+            .selected-item .remove-item {
+                margin-left: 2px;
+                margin-right: 2px;
+            }
+
+        .list-group-item-pozisyon {
+            cursor: pointer;
+        }
+
+            .list-group-item-pozisyon:hover {
+                background-color: #f8f9fa;
+            }
+
+        .account-section {
+            display: flex; /* Flexbox düzeni */
+            justify-content: center; /* Yatayda ortalama */
+            align-items: center; /* Dikeyde ortalama */
+         
+        }
+
+        .d-table {
+            display: table; /* Table display ayarı */
+        }
+
+        .d-table-cell {
+            display: table-cell; /* Table cell display ayarı */
+            vertical-align: middle; /* Dikey ortalama */
+            text-align: center; /* Metni ortala */
+        }
+
+
+        /* Dropdown açılırken yukarıya doğru açılmasını önler */
+        select {
+            position: relative; /* Pozisyon ayarı */
+            z-index: 10; /* Z-index ayarı, diğer öğelerin üstünde görünmesini sağlar */
+        }
+
+
+
+        .form-group {
+            position: relative; /* İçerik için konumlama */
+        }
+
+        .field-icon {
+            position: absolute; /* İkonun konumunu belirle */
+            right: 15px; /* Sağ tarafta konumlandır */
+            top: 70%; /* Yükseklik olarak ortala */
+            transform: translateY(-50%); /* Dikeyde tam ortalamak için */
+            cursor: pointer; /* Fare işaretçisi */
+            color: #888; /* İkonun rengi */
+            font-size: 1em; /* İkon boyutu */
+            pointer-events: auto; /* İkonun üzerine tıklanmasını sağlar */
+        }
+
+
+
+        #konusmaBalonu {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            max-width: 300px;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        #konusmaBalonu::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+                border-top: 10px solid #28a745;
+        }
+
+        .default-btn.disabled {
+            background-color: grey;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+
+            .list-group-item:hover {
+                background-color: #f8f9fa; /* Bootstrap's hover background color */
+            }
+
+        .your-class {
+            cursor: default; 
+            text-decoration: none;
+        }
+
+            .your-class:hover {
+                cursor: pointer;
+            }
+
+        #meslekList {
+            max-height: 150px; /* Liste yüksekliğini sınırlandır */
+            overflow-y: auto; /* Dikey kaydırma çubuğunu göster */
+            display: none; /* Başlangıçta liste gizli */
+            position: absolute; /* Listeyi pozisyonlayarak diğer öğelerin üstünde olmasını sağla */
+            z-index: 1000; /* Liste üstte görünmeli */
+        }
+
+
+    </style>
+ 
+   
+</head>
+<body>
+  
+
+   
+    <!--//navbar-->
+    <!-- Pre-loader End -->
+    <!-- Navbar Area Start -->
+    <div class="navbar-area">
+        <!-- Menu For Mobile Device -->
+        <div class="mobile-nav">
+            <a href="index.html" class="logo">
+                <img src="~/assets/img/altieylullogo.png" alt="logo">
+            </a>
+        </div>
+
+        <!-- Menu For Desktop Device -->
+        <div class="main-nav">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a asp-action="Anasayfa" asp-controller="Home" class="navbar-brand  header-logo" >
+                        <img src="~/assets/img/altieylullogo.png" alt="logo">
+                    </a>
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav m-auto">
+                            <li class="nav-item">
+                                <a asp-action="Anasayfa" asp-controller="Home" class="nav-link">Anasayfa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-action="Havuz" asp-controller="Isveren" class="nav-link">CV Havuzu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Kariyer Rehberi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-action="Is_Ilanlari" asp-controller="Home" class="nav-link">İş İlanları</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">İletişim</a>
+                            </li>
+                        </ul>
+
+                        <div class="other-option">
+                                @if (User.Identity!.IsAuthenticated)
+                            {
+                            
+                                 <form method="get" asp-controller="Hesap" asp-action="Profil" class="d-inline"> 
+                                     
+                                    <button type="submit" class="signup-btn">Hoşgeldin,  @User.Claims.FirstOrDefault(c => c.Type == "AdSoyad")?.Value</button>
+
+                                </form> 
+                                   <form method="post" asp-controller="Home" asp-action="Cikis" class="d-inline">
+                                   
+                                      <button type="submit" class="signup-btn"><i class="fa-solid fa-arrow-right-from-bracket" style="margin-right:5px;"></i>Çıkış Yap</button> 
+                                </form>
+                                   
+                                }
+                                else
+                                {
+                                
+                                 <a href="@Url.Action("Giris", "Home", new { kullaniciTur = "IsArayan" })" class="signup-btn">İş Arayan</a>
+                                <a href="@Url.Action("Giris", "Home", new { kullaniciTur = "IsVeren" })" class="signin-btn">İş Veren</a>
+                               }
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar Area End -->
+    <!-- Page Title Start -->
+
+
+
+
+
+    @RenderBody()
+
+
+
+
+    <!--foooter-->
+    <!-- Footer Section Start -->
+    <!--foooter-->
+    <!-- Footer Section Start -->
+    <footer class="footer-area pt-100 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <a asp-action="Anasayfa" asp-controller="Home">
+                                <img src="~/assets/img/altieylullogo.png" alt="logo" style="width:40%;">
+                            </a>
+                        </div>
+
+
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
+                            <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget pl-60">
+                        <h3>Kurumsal</h3>
+                        <ul>
+                            <li>
+                                <a href="job-grid.html">
+                                    <i class='bx bx-chevrons-right bx-tada'></i>
+                                    KVKK Aydınlatma Metni
+                                </a>
+                            </li>
+                            <li>
+                                <a href="account.html">
+                                    <i class='bx bx-chevrons-right bx-tada'></i>
+                                    Hakkımızda
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget pl-60">
+                        <h3>Hızlı Erişim</h3>
+                        <ul>
+                            <li>
+                                <a href="index.html">
+                                    <i class='bx bx-chevrons-right bx-tada'></i>
+                                    İlanlar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about.html">
+                                    <i class='bx bx-chevrons-right bx-tada'></i>
+                                    Firmalar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="faq.html">
+                                    <i class='bx bx-chevrons-right bx-tada'></i>
+                                    Kayıt Ol
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget footer-info">
+                        <h3>İletişim</h3>
+                        <ul>
+                            <li>
+                                <span>
+                                    <i class='bx bxs-phone'></i>
+                                    Telefon:
+                                </span>
+                                <a href="tel:4440609">
+                                    444 06 09
+                                </a>
+                            </li>
+
+                            <li>
+                                <span>
+                                    <i class='bx bxs-envelope'></i>
+                                    Email:
+                                </span>
+                                <a href="mailto:kariyer@altieylul.bel.tr">
+                                    kariyer@altieylul.bel.tr
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright-text text-center">
+        <p>© 2024 | Altıetlül Belediyesi - Bilgi İşlem Müdürlüğü </p>
+    </div>
+    <!-- Footer Section End -->
+    <!-- Back To Top Start -->
+    <div class="top-btn active">
+        <i class='bx bx-chevrons-up bx-fade-up'></i>
+    </div>
+    <!-- Back To Top End -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <!-- Nice Select JS -->
+   
+     <script src="~/assets/js/jquery.nice-select.min.js"></script> 
+    <!-- Magnific Popup JS -->
+    <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Subscriber Form JS -->
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <!-- Form Velidation JS -->
+    <script src="~/assets/js/form-validator.min.js"></script>
+    <!-- Contact Form -->
+    <script src="~/assets/js/contact-form-script.js"></script>
+    <!-- Meanmenu JS -->
+    <script src="~/assets/js/meanmenu.js"></script>
+    <!-- Custom JS -->
+    <script src="~/assets/js/custom.js"></script>
+   
+   
+    <!-- Nice Select JS -->
+   
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+    

@@ -1,0 +1,223 @@
+@model IsIlaniViewModel
+        <!-- Page Title Start -->
+        <section class="page-title title-bg2">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <h2>İş İlanları</h2>
+                </div>
+            </div>
+            <div class="lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </section>
+        <!-- Page Title End -->
+
+        <!-- Find Section Start -->
+        <div class="find-section ptb-100">
+            <div class="container">
+				<form asp-action="Is_Ilanlari" method="get" class="find-form">
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="form-group">
+						<input type="text" name="meslekAnahtarKelime" class="form-control" id="exampleInputEmail1" placeholder="Meslek veya Anahtar Kelime">
+								<i class="bx bx-search-alt"></i>
+							</div>
+						</div>
+
+						<div class="col-lg-3">
+					@Html.DropDownListFor(x => x.CalismaSekliAd, Model.CalismaSekliListesi, "İş Türü", new { @class = "tur " })
+
+						</div>
+
+						<div class="col-lg-3">
+					@Html.DropDownListFor(x => x.KategoriAd, Model.KategoriListesi, "Kategori", new { @class = "category " })
+
+
+				</div>
+
+						<div class="col-lg-3">
+							<button type="submit" class="find-btn">
+								Ara
+								<i class='bx bx-search'></i>
+							</button>
+						</div>
+					</div>
+				</form>
+            </div>
+        </div>
+        <!-- Find Section End -->
+
+		<!-- Jobs Section Start -->
+		<section class="job-section pb-70">
+			<div class="container">
+				<div class="row">
+
+			@foreach(var ilan in Model.IsIlanlari!)
+			{
+
+
+
+
+                    <div class="col-md-6">
+					<form id="ilanDetayForm_@ilan.IlanIdEncrypted" method="get" asp-controller="Home" asp-action="FavoriEkle">
+                   <input type="hidden" name="ilanId" value="@ilan.IlanIdEncrypted" /> 
+					<div class="job-card">
+						<div class="row align-items-center">
+							<div class="col-lg-3">
+								<div class="thumb-img">
+									@if (!String.IsNullOrEmpty(ilan.Foto))
+									{
+											<button class="btn-link"  type="submit"> <img src="~/images/@ilan.Foto" alt="company logo" /></button>
+										
+									
+									}
+								
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="job-info">
+										<h3>
+                                            <a href="javascript:void(0)" class="your-class"  onclick="submitForm('@ilan.IlanIdEncrypted')">@ilan.IlanBaslik</a>
+										</h3>
+										<ul>
+                                            <li>
+												Via  <a href="javascript:void(0)" class="your-class" onclick="submitForm('@ilan.IlanIdEncrypted')">@ilan.FirmaAd</a>
+                </li>
+											<li>
+												<i class='bx bx-location-plus'></i>
+											@ilan.CalismaKonumu
+											</li>
+											<li>
+												<i class='bx bx-filter-alt' ></i>
+											@ilan.KategoriAd
+											</li>
+											<li>
+												<i class='bx bx-briefcase' ></i>
+											@ilan.CalismaSekli
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="col-lg-3">
+									<div class="job-save">
+									
+									@if (User.Identity!.IsAuthenticated)
+									{
+
+										<a href="#" class="begeniButon" data-select-id="@ilan.IlanNo">
+											<i class='bx bx-heart' style="background-color: @(ilan.BegeniVarMi ? "" : "");color: @(ilan.BegeniVarMi ? "" : "^")"></i>
+										</a>
+
+										
+
+									}
+
+									else
+									{
+										<a asp-action="Giris" asp-controller="Home">
+                                                <i class='bx bx-heart'></i>
+										</a>
+                                
+										
+											
+										
+									}
+										<p>
+											<i class='bx bx-stopwatch' ></i>
+										@ilan.ZamanFarki
+										</p>
+									</div>
+								</div>
+							</div>
+                        </div>
+                    </form>
+					</div>
+			
+				
+				}
+		
+
+					
+				</div>
+			</div>
+		</section>
+		<!-- Jobs Section End -->
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		
+		$(".begeniButon").each(function () {
+			var ilanNo = $(this).data("select-id");
+			var button = $(this).find('i');
+
+			// Tarayıcıda saklanan beğeni durumunu kontrol et
+			var begeniDurumu = localStorage.getItem("begeni_" + ilanNo);
+			if (begeniDurumu === "true") {
+				button.css({
+					"color": "#ffffff", // Beğenilirse beyaz
+					"background-color": "#258ab5" // Arka plan mavi
+				});
+			} else {
+				button.css({
+					"color": "gray",
+					"background-color": "#ffffff" // Arka plan beyaz
+				});
+			}
+		});
+
+		$(".begeniButon").click(function (event) {
+			event.preventDefault(); 
+
+			var ilanNo = $(this).data("select-id");
+			var button = $(this).find('i');
+
+			$.ajax({
+				url: '@Url.Action("Begeni_Ekle", "Home")', 
+				type: 'POST',
+				data: {
+					ilanNo: ilanNo
+				},
+				success: function (response) {
+					if (response.begeniEklendi) {
+						button.css({
+							"color": "#ffffff", 
+							"background-color": "#258ab5" 
+						});
+
+						localStorage.setItem("begeni_" + ilanNo, "true");
+					} else {
+						button.css({
+							"color": "gray",
+							"background-color": "#ffffff" 
+						});
+
+						localStorage.setItem("begeni_" + ilanNo, "false");
+					}
+				},
+				error: function () {
+					alert("Beğeni işlemi başarısız oldu.");
+				}
+			});
+		});
+	});
+</script>
+<script>
+function submitForm(ilanId) {
+	var form = document.getElementById('ilanDetayForm_' + ilanId);
+
+	if (form) {
+		form.submit();
+	} else {
+		console.log('Form bulunamadı: ilanDetayForm_' + ilanId);
+	}
+}
+
+</script>

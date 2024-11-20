@@ -1,0 +1,139 @@
+﻿@model IsVerenViewModel
+<h4>Kişisel Bilgiler</h4>
+<div class="signup-form">
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <div class="form-group">
+                <label>Firma Logosu Yükleyiniz</label>
+                @Html.TextBoxFor(x => x.FotoDosya, new
+                    {
+                        type = "file",
+                        accept = "image/png, image/jpg, image/jpeg",
+                        @class = "form-control"
+                        
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label for="SehirId">Şehir</label>
+                 @Html.DropDownListFor(x => x.SehirId, Model.Sehirler, "Şehir Seçin", new { @class = "form-control ", id = "sehirDropdown" })
+                 
+            
+            </div> 
+            <span><span asp-validation-for="SehirId" class="text-danger"></span></span>
+           
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label for="IlceId">İlçe</label>
+                @Html.DropDownListFor(x => x.IlceId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"), "İlçe Seçin", new { @class = "form-control nice-select", id = "ilceDropdown" })
+
+            </div>         
+            <strong><span asp-validation-for="IlceId" class="text-danger"></span></strong>
+
+        </div>
+        <div class="col-lg-12 col-12">
+            <div class="form-group">
+                <label>Adres</label>
+                @Html.TextBoxFor(x => x.Adres, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Vergi Dairesi</label>
+                @Html.TextBoxFor(x => x.VergiDairesi, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Vergi Numarası</label>
+                @Html.TextBoxFor(x => x.VergiNo, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+              <label>Çalışan Sayısı</label>
+     
+                @Html.DropDownListFor(x => x.MevcutPersonelSayiId, new
+                         SelectList(Model.MevcutPersonelSayi, "Id", "Ad"), "Seçiniz",
+                         new{@class = "form-control"})
+            </div>
+        </div>
+
+    </div>
+    <div class="signup-btn text-center">
+        <button type="submit">Kaydı Tamamla</button>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('select').niceSelect();
+        $('#sehirDropdown').val('').niceSelect('update');
+        $('#sehirDropdown').change(function () {
+            var sehirId = $(this).val();
+
+
+            if (sehirId) {
+
+
+                $.ajax({
+                    url: '@Url.Action("GetIlceler", "IsVeren")',
+                    type: 'GET',
+                    data: { sehirId: sehirId },
+                    success: function (data) {
+
+
+                        var ilceDropdown = $('#ilceDropdown');
+                        ilceDropdown.empty();
+                        ilceDropdown.append('<option value="">İlçe Seçin</option>');
+
+                        $.each(data, function (index, ilce) {
+
+
+                            ilceDropdown.append($('<option>').text(ilce.ad).attr('value', ilce.id));
+
+                        });
+
+                        $('.nice-select').niceSelect('update');
+
+                    },
+
+
+                    error: function () {
+                        alert('İlçeler yüklenirken bir hata oluştu.');
+
+                    }
+                });
+            } else {
+                $('#ilceDropdown').empty().append('<option value="">İlçe Seçin</option>');
+                $('#ilceDropdown').niceSelect('update');
+
+            }
+        });
+
+
+
+      
+    });
+
+</script>
+
+

@@ -1,0 +1,104 @@
+﻿@model IsArayanViewModel
+
+<h4>Üyelik Bilgileri</h4>
+<div class="signup-form">
+    <div class="row">
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Ad Soyad</label>
+                @Html.TextBoxFor(x => x.AdSoyad, new
+                    {
+                        type = "text",
+                        @class = "form-control",
+                        required = "required"
+                    })
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>T.C. Kimlik No</label>
+                @Html.TextBoxFor(x => x.Tck, new
+                    {
+                        type = "number",
+                        @class = "form-control",
+                        maxlength = "11",
+                        
+                        required = "required"
+                    })<strong><span asp-validation-for="Tck" class="text-danger"></span></strong>
+            </div>
+
+       
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>E-Mail Adresi</label>
+                @Html.TextBoxFor(x => x.KullaniciBilgiler!.Eposta, new
+                    {
+                        type = "email",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>GSM No</label>
+                @Html.TextBoxFor(x => x.KullaniciBilgiler!.TelefonNo, new
+                    {
+                        type = "number",
+                        @class = "form-control",
+                        required = "required"
+                    })
+            </div>
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Şifre Giriniz</label>
+                @Html.TextBoxFor(x => x.Parola, new
+                    {
+                        type = "password",
+                        @class = "form-control",
+                        required = "required",
+                         id = "parola"
+                    })
+                <span toggle="#parola" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+                <strong><span asp-validation-for="Parola" class="text-danger"></span></strong>
+               
+            </div> 
+        </div>
+        <div class="col-lg-6 col-6">
+            <div class="form-group">
+                <label>Şifrenizi Doğrulayın</label>
+                   @Html.TextBoxFor(x => x.ParolaTekrar, new
+                {
+                type = "password",
+                @class = "form-control",
+                required = "required",
+                         id = "parolaTekrar"
+                })
+                <span toggle="#parolaTekrar" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+                <strong><span asp-validation-for="ParolaTekrar" class="text-danger"></span></strong>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll(".toggle-password").forEach(function (element) {
+        element.addEventListener("click", function () {
+            var input = document.querySelector(this.getAttribute("toggle"));
+            if (input.type === "password") {
+                input.type = "text"; // Şifreyi görünür yap
+                this.classList.remove("fa-eye-slash"); // Göz simgesini kaldır
+                this.classList.add("fa-eye"); // Göz kapalı simgesini ekle
+            } else {
+                input.type = "password"; // Şifreyi gizle
+                this.classList.remove("fa-eye"); // Göz kapalı simgesini kaldır
+                this.classList.add("fa-eye-slash"); // Göz simgesini ekle
+            }
+        });
+    });
+</script>

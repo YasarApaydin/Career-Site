@@ -1,0 +1,542 @@
+﻿@model ProfilViewModel
+    <!-- Page Title Start -->
+    <section class="page-title title-bg10">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <h2>Hesap</h2>
+                <ul>
+                    <li>
+                        <a asp-action="Anasayfa">Anasayfa</a>
+                    </li>
+                    <li>Hesap</li>
+                </ul>
+            </div>
+        </div>
+        <div class="lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </section>
+    <!-- Page Title End -->
+    <!-- Account Area Start -->
+    <section class="account-section ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="account-information">
+                        <div class="profile-thumb">
+                        <img src="~/images/@Model.Foto" alt="account holder image" class="profile-image">
+                            <h3>@Model.AdSoyad</h3>
+                        @if (Model.kullaniciTür == 2)
+                        { 
+                            <h6>@Model.FirmaUnvan</h6>
+                        }
+                        <p>@Model.Eposta</p>
+                        </div>
+
+                        <ul>
+                            <li>
+                                <a href="#" class="active">
+                                    <i class="bx bx-user"></i>
+                                    Profilim
+                                </a>
+                            </li>
+                           
+                            @if (Model.kullaniciTür == 1)
+                            {
+                               <li>
+
+
+
+                                <a id="ozgecmisButton" >
+                                    <i class="bx bxs-file-doc"></i>
+                                    Özgeçmişim
+                                </a>
+                            </li>
+                            @* <li>
+                                <a href="#">
+                                    <i class="bx bx-briefcase"></i>
+                                    Başvurulan İş
+                                </a>
+                            </li> *@
+                            }
+                           @*  <li>
+                                <a asp-action="mesajj">
+                                    <i class="bx bx-envelope"></i>
+                                    Mesajlar
+                                </a>
+                            </li>  *@
+                        @if(Model.kullaniciTür == 2)
+                        {
+                               <li>
+                            <a asp-action="Firma_Ilanlar" asp-controller="IsVeren">
+                                    <i class="fas fa-bullhorn"></i>
+                                İlanlarım
+                            </a>
+                        </li>
+                        }
+                     
+@*                               @if (Model.kullaniciTür ==1)
+                        {
+                            <li>
+                                <a href="#">
+                                    <i class="bx bx-heart"></i>
+                                    Kaydedilen İşler
+                                </a>
+                            </li>
+                        } *@
+                        <li>
+                                <a asp-action="SifreYenile">
+                                    <i class="bx bx-lock-alt"></i>
+                                    Şifre değiştir
+                                </a>
+                            </li>
+                       <li>
+                            <a asp-action="SilOnay">
+                                <i class="bx bx-coffee-togo"></i> Hesap Sil
+                            </a>
+                       
+                               
+                            </li>
+                            <li>
+                            <form method="post" asp-controller="Home" asp-action="Cikis" style="display:inline;">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">
+                                    <i class="bx bx-log-out"></i>
+                                    Çıkış
+                                </a>
+                            </form>
+
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+
+            <div class="col-md-8">
+                <form method="post" asp-action="Profil" asp-controller="Hesap" class="basic-info">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="account-details">
+                        <h3>Temel Bilgiler</h3>
+                       
+                       
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Ad Soyad</label>
+                                    @Html.TextBoxFor(m => m.AdSoyad, new { @class = "form-control", type = "text", placeholder = "Ad Soyad", @readonly = "readonly" })
+                                    <span asp-validation-for="AdSoyad" class="text-danger"></span>
+                                        
+                                    </div>
+                                </div>
+
+                            <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>E-postanız</label>
+                                    @Html.TextBoxFor(m => m.Eposta, new { @class = "form-control", type = "email", placeholder = "E-postanız", @readonly = "readonly" })
+                                    <span asp-validation-for="Eposta" class="text-danger"></span>
+                                      
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Telefon Numaranız</label>
+                                    @Html.TextBoxFor(m => m.TelefonNo, new { @class = "form-control", type = "number", placeholder = "Telefon Numaranız", @readonly = "readonly" })
+                                    <span asp-validation-for="TelefonNo" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>
+                                            İş unvanı
+                                        </label>
+
+                                    @Html.TextBoxFor(m => m.Meslek, new { @class = "form-control", type = "text", @id = "meslekSearch", placeholder = "İş Unvanı", @readonly = "readonly" })
+                                    <span asp-validation-for="MeslekId" class="text-danger"></span>
+                                    <input type="hidden" id="meslekId" name="MeslekId" value="@Model.MeslekId" />
+                                    <ul id="meslekList" class="list-group" style="display:none; position: absolute; z-index: 1000;"></ul>
+
+                                    </div>
+                                </div>
+                               
+                            </div>
+                 
+                        <h3>Adres</h3>
+                        
+                            <div class="row">
+
+
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label>Şehriniz</label>
+                                    <input type="text" class="form-control" value="Balıkesir" readonly disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label>İlçe</label>
+                                 
+                                      @Html.DropDownListFor(m => m.IlceId, new SelectList(Model.Ilceler, "Value", "Text"), "İlçe Seçiniz",
+                                             new { @class = "form-control ", @readonly = "readonly",@disabled = "disabled" })
+                                </div>
+                            </div>
+                               
+                            </div>
+             
+                        <h3>Diğer bilgiler</h3>
+                        
+                            <div class="row">
+                            <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Yaşınız</label>
+                                    
+                                        @Html.TextBoxFor(model => model.yas, new { @class = "form-control", type = "number", placeholder = "Yaşınız", @readonly = "readonly" })
+                                        <span asp-validation-for="yas" class="text-danger"></span>
+                                    
+                                   
+                                    </div>
+                                </div>
+
+                            <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>İş Deneyimi</label>
+                                   
+
+                                    @Html.TextBoxFor(model => model.Deneyim, new { @class = "form-control", placeholder = "Deneyiminiz.", type = "text", @readonly = "readonly" })
+                                    <span asp-validation-for="Deneyim" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                 
+                            </div>
+               
+
+                        <h3>Sosyal bağlantılar</h3>
+                       
+                            <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Facebook</label>
+                                    @Html.TextBoxFor(model => model.Facebook, new { @class = "form-control", placeholder = "www.facebook.com/user", @readonly = "readonly" })
+                                    <span asp-validation-for="Facebook" class="text-danger"></span>
+                                       
+                                    </div>
+                                </div>
+
+                            <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Twitter</label>
+                                    @Html.TextBoxFor(model => model.Twitter, new { @class = "form-control", placeholder = "www.twitter.com/user", @readonly = "readonly" })
+                                    <span asp-validation-for="Twitter" class="text-danger"></span>
+
+                                    
+                                    </div>
+                                </div>
+
+                            <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Linkedin</label>
+                                    @Html.TextBoxFor(model => model.Linkedin, new { @class = "form-control", placeholder = "www.Linkedin.com/user", @readonly = "readonly" })
+                                    <span asp-validation-for="Linkedin" class="text-danger"></span>
+                                       
+                                    </div>
+                                </div>
+
+                            <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Github</label>
+                                    @Html.TextBoxFor(model => model.Github, new { @class = "form-control", placeholder = "www.Github.com/user", @readonly = "readonly" })
+                                    <span asp-validation-for="Github" class="text-danger"></span>
+                                       
+                                    </div>
+                                </div>
+                            <div class="col-md-12 mb-3">
+                                <button type="submit" class="profile-btn" id="editBtn">Düzenle</button>
+                                <button type="submit" class="profile-btn" id="saveBtn" disabled>Kaydet</button>
+                            </div>
+                      
+                        </div>
+
+
+                        
+                    </div>
+                
+                </form>
+                </div>
+                    
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+<div id="ozgecmisModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="ozgecmisContent">
+            
+           
+        </div>
+    </div>
+</div>
+
+
+                    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // CV Durumunu Güncelle ve Modalı Aç
+        document.getElementById('ozgecmisButton').onclick = async function () {
+            document.getElementById('ozgecmisModal').style.display = "block";
+            await guncelleOzgecmisContent();
+        };
+
+        // Modalı Kapat
+        document.querySelector('.close').onclick = function () {
+            document.getElementById('ozgecmisModal').style.display = "none";
+        };
+
+        // Modal dışında bir yere tıklanırsa modalı kapat
+        window.onclick = function (event) {
+            const modal = document.getElementById('ozgecmisModal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // CV Durumunu Güncelleme Fonksiyonu
+        async function guncelleOzgecmisContent() {
+            const response = await fetch('/Hesap/Ozgecmis');
+            const data = await response.json();
+
+            const ozgecmisContent = document.getElementById('ozgecmisContent');
+            ozgecmisContent.innerHTML = ''; // Önce içeriği temizle
+
+            if (data.cvVarMi) {
+                ozgecmisContent.innerHTML = `
+                            <button class="btn btn-primary" onclick="window.location.href='/Hesap/OzgecmisGoruntule'">CV'yi Görüntüle</button>
+                        <button class="btn btn-secondary" id="duzenleButton">CV'yi Düzenle</button>
+                    `;
+
+                document.getElementById('duzenleButton').onclick = function () {
+                    ozgecmisContent.innerHTML = `
+                                <form id="pdfUploadForm" method="post" enctype="multipart/form-data">
+                                <label for="pdfFile" class="btn btn-success">PDF Yükle (Maksimum 10 MB)</label>
+                                <input id="pdfFile" type="file" name="pdfFile" accept=".pdf" style="display: none;" />
+                                <button type="submit" class="btn btn-primary" id="uploadButton" style="display: none;">Yükle</button>
+                                <a class="btn btn-warning" href='/IsArayan/Ozgecmis'>CV Oluştur</a>
+                            </form>
+                        `;
+
+                    bindFormSubmit();
+                };
+            } else {
+                ozgecmisContent.innerHTML = `
+                        <form id="pdfUploadForm" method="post" enctype="multipart/form-data">
+                            <label for="pdfFile" class="btn btn-success">PDF Yükle (Maksimum 10 MB)</label>
+                            <input id="pdfFile" type="file" name="pdfFile" accept=".pdf" style="display: none;" />
+                            <button type="submit" class="btn btn-primary" id="uploadButton" style="display: none;">Yükle</button>
+                            <a class="btn btn-warning" href='/IsArayan/Ozgecmis'>CV Oluştur</a>
+                        </form>
+                    `;
+
+              
+                bindFormSubmit();
+            }
+        }
+
+        function bindFormSubmit() {
+            const form = document.getElementById('pdfUploadForm');
+            if (form) {
+                const fileInput = document.getElementById('pdfFile');
+                const uploadButton = document.getElementById('uploadButton');
+
+                // Dosya seçildiğinde Yükle butonunu göster
+                fileInput.onchange = function () {
+                    if (this.files.length > 0) {
+                        uploadButton.style.display = 'inline-block'; // Yükle butonunu göster
+                    } else {
+                        uploadButton.style.display = 'none'; // Dosya seçilmezse butonu gizle
+                    }
+                };
+
+                form.onsubmit = async function (e) {
+                    e.preventDefault();
+                    const file = fileInput.files[0];
+
+                  
+                    if (file && file.size > 10 * 1024 * 1024) { 
+                        alert("Dosya boyutu 10 MB'ı aşamaz.");
+                        return;
+                    }
+
+                    const formData = new FormData(this);
+
+                    const response = await fetch('/Hesap/Yukle', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert("PDF başarıyla yüklendi!");
+                        await guncelleOzgecmisContent(); 
+                    } else {
+                        alert("PDF yüklenirken bir hata oluştu!");
+                    }
+                };
+            }
+        }
+    });
+</script>
+
+
+
+
+    <!-- Account Area End -->
+    <!-- Subscribe Section Start -->
+ 
+    <!-- Subscribe Section End -->
+<script>
+    // Sayfa yüklendiğinde çalıştırılacak fonksiyon
+    document.addEventListener("DOMContentLoaded", function () {
+        // nice-select div'ini kaldır
+        const niceSelectDiv = document.querySelector(".nice-select");
+        if (niceSelectDiv) {
+            niceSelectDiv.remove(); 
+        }
+
+       
+        const selectElement = document.getElementById('IlceId');
+        if (selectElement) {
+            selectElement.style.display = 'block';
+        }
+    });
+
+    window.addEventListener("load", function () {
+        makeInputsReadonly();
+    });
+
+    document.getElementById("editBtn").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        makeInputsEditable();
+        this.style.display = "none";
+        document.getElementById("saveBtn").disabled = false;
+        localStorage.setItem("isEditing", "true");
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        this.closest('form').submit();
+        localStorage.setItem("isEditing", "false");
+    });
+
+    function makeInputsEditable() {
+        document.querySelectorAll("input.form-control").forEach(function (input) {
+            input.removeAttribute("readonly");
+        });
+
+        // Dropdown'u etkinleştir
+        document.getElementById("IlceId").removeAttribute("disabled");
+
+        document.getElementById("saveBtn").disabled = false;
+    }
+
+    function makeInputsReadonly() {
+        document.querySelectorAll("input.form-control").forEach(function (input) {
+            input.setAttribute("readonly", "readonly");
+        });
+
+        // Dropdown'u devre dışı bırak
+        document.getElementById("IlceId").setAttribute("disabled", "disabled");
+
+        document.getElementById("saveBtn").disabled = true;
+        document.getElementById("editBtn").style.display = "inline";
+    }
+</script>
+
+<script>
+    
+    let aramaSayisi = 0;
+
+    
+    document.getElementById('meslekSearch').addEventListener('keyup', async function () {
+        const searchTerm = this.value;
+
+       
+        if (searchTerm.length < 3) {
+            document.getElementById('meslekList').style.display = 'none'; // Listeyi gizle
+            return; 
+        }
+
+        
+        aramaSayisi++;
+
+        try {
+            
+            const response = await fetch(`/Hesap/MeslekAra?searchTerm=${encodeURIComponent(searchTerm)}`);
+
+            
+            if (!response.ok) {
+                throw new Error('Meslek arama isteği başarısız oldu: ' + response.statusText);
+            }
+
+            const meslekler = await response.json(); 
+           
+
+            const meslekList = document.getElementById('meslekList');
+            meslekList.innerHTML = ''; 
+
+            
+            if (Array.isArray(meslekler) && meslekler.length > 0) {
+                meslekler.forEach(meslek => {
+                    const li = document.createElement('li'); 
+                    li.className = 'list-group-item'; 
+                    li.textContent = meslek.text || "Tanımsız Meslek";
+                    li.setAttribute('data-value', meslek.value || ""); 
+                 
+
+                 
+                    li.onclick = function () {
+                        document.getElementById('meslekSearch').value = this.textContent; 
+
+                   
+                        const meslekIdInput = document.getElementById('meslekId');
+
+                        if (meslekIdInput) { 
+                            meslekIdInput.value = this.getAttribute('data-value');
+                        } else {
+                            console.error("meslekId öğesi bulunamadı."); 
+                        }
+
+                        meslekList.style.display = 'none';
+                        this.parentNode.innerHTML = ''; 
+                    };
+
+                    meslekList.appendChild(li); 
+                });
+
+                
+                if (aramaSayisi % 10 === 0) {
+                    meslekList.style.display = 'block'; 
+                } else {
+                    meslekList.style.display = 'block'; 
+                }
+            } else {
+                
+                meslekList.style.display = 'none';
+            }
+        } catch (error) {
+            console.error(error); 
+        }
+    });
+
+
+</script>
+
+
